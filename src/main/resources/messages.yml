@@ -1,0 +1,43 @@
+# Utilize {} e o nome do placeholder entre elas:
+# {display} = pega o nome de exibição do player ou da crate (crate e key são o mesmo):
+# {name} = pega o nome do player ou da crate (crate e key são o mesmo):
+# {rarity} = pega a raridade da crate:
+# {default} = utiliza uma própria string já previamente setada no plugin (não tem como mudar isto de fora do plugin):
+# {quantity} = pega a quantia do item.
+prefix: '&6[&fNotzWarps&6]&f '
+messages:
+  start: '&aCrate &6{name} &ainicializada.'
+  erro: '&cErro ao inicializar a Crate &6{name}&c.'
+
+items:
+  default:
+    material: 'PAPER'
+    enchanted: true
+    name: '&c&lDefault'
+    lore:
+      - '&c&oO'
+  exit:
+    material: 'BARRIER'
+    enchanted: false
+    name: '&4&lSair'
+    lore: []
+  emptypage:
+    material: 'TIER_GHAST'
+    enchanted: false
+    name: '&f&lEmpty'
+    lore: []
+  back:
+    material: 'ARROW'
+    enchanted: false
+    name: '&e&lVoltar'
+    lore: []
+  save:
+    material: 'SLIME_BALL'
+    enchanted: false
+    name: '&a&lSalvar'
+    lore:
+  head:
+    material: 'SKULL'
+    enchanted: false
+    name: '&a&l{display}'
+    lore: []

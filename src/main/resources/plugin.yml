@@ -1,0 +1,46 @@
+name: NotzWarps
+version: '${version}'
+main: notzwarps.Main
+commands:
+  warp:
+    description: erro na warp command
+    usage: /warp
+    aliases:
+      - w
+      - wp
+      - ws
+      - wps
+      - warps
+      - spawn
+  nwarp:
+    description: erro na nwarp command
+    usage: /nwarp
+    aliases:
+      - nw
+      - nwp
+      - nws
+      - nwps
+      - nwarps
+  tpa:
+    description: erro no tpa
+    usage: /tpa
+    aliases:
+      - tp
+      - teleport
+      - tpaccept
+      - tpaceitar
+      - tpacancel
+      - tpadeny
+      - tparefuse
+      - tpacancelar
+      - tparecusar
+permissions:
+  notzwarps.admin:
+    description: perm admin
+    default: false
+  notzwarps.nodelay:
+    description: perm no delay
+    default: false
+  notzwarps.vip:
+    description: perm vip
+    default: false

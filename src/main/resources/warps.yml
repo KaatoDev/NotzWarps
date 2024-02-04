@@ -1,0 +1,225 @@
+spawnToWarp: true
+autoSlot: true
+warpList:
+  - spawn
+  - x1
+  - arenaprincipal
+  - vip
+  - spawnsub
+  - spawn2
+  - minapvp
+  - minaevento
+  - mina
+  - arenagladiador
+  - arenabosta
+  - minavip
+  - areavip
+warps:
+  spawn:
+    slot: 1
+    display: '&e&lSpawn'
+    location:
+      world: NotzLobby
+      x: 268.5
+      y: 24.01
+      z: -9.5
+      pitch: 0.0
+      yaw: -270.0
+    item:
+      material: GRASS
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fspawn'
+  spawnsub:
+    display: §e§lspawnsub
+    slot: -1
+    location:
+      world: NotzLobby
+      x: 1033.5
+      y: 97.01
+      z: -91.5
+      yaw: 0.0
+      pitch: 0.0
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fspawnsub'
+  x1:
+    display: §e§lx1
+    slot: -1
+    location:
+      world: notzworld
+      x: 2008.5
+      y: 37.01
+      z: 2001.5
+      yaw: -270.0
+      pitch: 0.0
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fx1'
+  arenaprincipal:
+    display: §e§larenaprincipal
+    slot: -1
+    location:
+      world: NotzWorld
+      x: 1000.5
+      y: 57.01
+      z: 999.5
+      yaw: 0.0
+      pitch: 0.0
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &farenaprincipal'
+  vip:
+    display: §e§lvip
+    slot: -1
+    location:
+      world: notzworld
+      x: 4001.5
+      y: 55.01
+      z: 996.5
+      yaw: 0.0
+      pitch: 0.0
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fvip'
+  spawn2:
+    slot: -1
+    item:
+      material: DIRT
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fspawn2'
+    display: §e§lspawn2
+    location:
+      world: NotzLobby
+      x: 1033.5
+      y: 97.01
+      z: -91.5
+      yaw: 0.0
+      pitch: 0.0
+  minapvp:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fminapvp'
+    display: §e§lminapvp
+    location:
+      world: notzworld
+      x: 2985.5
+      y: 69.01
+      z: 2967.5
+      yaw: 0.0
+      pitch: 0.0
+  minaevento:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fminaevento'
+    display: §e§lminaevento
+    location:
+      world: notzworld
+      x: 977.5
+      y: 53.01
+      z: 2065.5
+      yaw: -180.0
+      pitch: 0.0
+  mina:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fmina'
+    display: §e§lmina
+    location:
+      world: notzworld
+      x: 1001.5
+      y: 65.01
+      z: 2999.5
+      yaw: -90.0
+      pitch: 0.0
+  arenagladiador:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &farenagladiador'
+    display: §e§larenagladiador
+    location:
+      world: notzworld
+      x: 2000.5
+      y: 40.01
+      z: 1050.5
+      yaw: 0.0
+      pitch: 0.0
+  arenabosta:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &farenabosta'
+    display: §e§larenabosta
+    location:
+      world: notzworld
+      x: 4001.5
+      y: 49.01
+      z: 2004.5
+      yaw: -180.0
+      pitch: 0.0
+  minavip:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fminavip'
+    display: §e§lminavip
+    location:
+      world: notzworld
+      x: 4001.5
+      y: 55.01
+      z: 996.5
+      yaw: 0.0
+      pitch: 0.0
+  areavip:
+    slot: -1
+    item:
+      material: EYE_OF_ENDER
+      enchanted: false
+      lore:
+        - '&7&oClique para ir'
+        - '&7&oaté a warp &fareavip'
+    display: §e§lareavip
+    location:
+      world: notzworld
+      x: 4001.5
+      y: 55.01
+      z: 996.5
+      yaw: 0.0
+      pitch: 0.0
