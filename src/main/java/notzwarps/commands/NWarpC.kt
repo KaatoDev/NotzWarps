@@ -30,8 +30,10 @@ class NWarpC : TabExecutor {
 
         p = sender
 
-        if (!p.hasPermission("notzwarps.admin"))
+        if (!p.hasPermission("notzwarps.admin")) {
             p.sendMessage("&cSem permissão.")
+            return false
+        }
 
         var warp = ""
         var w = false

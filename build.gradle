@@ -19,26 +19,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation files('E:/Gago32/Minecraft/Servidor/APIs/NotzAPI-0.1.jar')
+    implementation files('E:/Gago32/Minecraft/Servidor/APIs/NotzAPI-0.2.jar')
 }
 
 jar {
-    manifest {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-        attributes(
-                "Implementation-Title": project.name,
-                "Implementation-Version": project.version,
-                "Main-Class": "notzshop.Main"
-        )
-    }
-    // This line of code recursively collects and copies all of a project's files
-    // and adds them to the JAR itself. One can extend this task, to skip certain
-    // files or particular types at will
-    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-
     archiveFileName = "NotzWarps-${project.version}.jar"
     destinationDirectory.set(file('E:/Gago32/Minecraft/Servidor/Rede Notz/plugins'))
 }

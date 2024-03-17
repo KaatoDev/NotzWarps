@@ -4,7 +4,6 @@ import notzapi.apis.NotzItems.buildItem
 import notzapi.utils.MessageU.c
 import notzapi.utils.MessageU.send
 import notzwarps.Main
-import notzwarps.Main.Companion.cf
 import notzwarps.Main.Companion.itemM
 import notzwarps.Main.Companion.phM
 import notzwarps.Main.Companion.warpGUI
@@ -17,9 +16,10 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 object WarpM {
-    private val delay = cf.config!!.getInt("teleport-delay") * 20L
-
     data class Warp(val name: String, var display: String, var location: Location, var slot: Int, var item: ItemStack)
+
+    val delayPlayer: Int = Main.cf.config!!.getInt("teleport-delay")
+    val delay = delayPlayer * 20L
 
     var warps = HashMap<String, Warp>()
     val warpTime = hashMapOf<Player, Int>()
@@ -41,7 +41,16 @@ object WarpM {
     fun teleport(player: Player, warpName: String) {
         val warp = warps[warpName]!!
 
+        if (warpTime.containsKey(player)) {
+            send(player, "&eJá há uma solicitação de teleport para warp em andamento.")
+            return
+        }
+
         if (!player.hasPermission("notzwarps.nodelay")) {
+
+            warpTime[player] = delayPlayer+1
+            send(player, "&eVocê será teleportado em 3 segundos.")
+
             Bukkit.getServer().scheduler.runTaskLater(Main.plugin, {
                 if (warpTime.containsKey(player)) {
                     player.teleport(warp.location)
@@ -60,18 +69,7 @@ object WarpM {
      * @param item Item da warp de destino.
      */
     fun teleport(player: Player, item: ItemStack) {
-        val warp = warps.values.find { it.item == item }!!
-
-        if (!player.hasPermission("notzwarps.nodelay"))
-            Bukkit.getServer().scheduler.runTaskLater(Main.plugin, {
-                player.teleport(warp.location)
-                send(player, "&eVocê foi teleportado para a &lwarp ${warp.display}&e.")
-            }, delay)
-
-        else {
-            player.teleport(warp.location)
-            send(player, "&eVocê foi teleportado para a &lwarp ${warp.display}&e.")
-        }
+        teleport(player, warps.values.find { it.item == item }!!.name)
     }
 
     fun getWarpsSlot(): List<Warp> {
@@ -91,7 +89,7 @@ object WarpM {
         if (location.x.toInt() >= 0)
             loc.x = location.x.toInt().toDouble() + 0.5
         else loc.x = location.x.toInt().toDouble() - 0.5
-        loc.y = location.y.toInt().toDouble() + 0.01
+        loc.y = location.y.toInt().toDouble() + 0.1
         if (location.z.toInt() >= 0)
             loc.z = location.z.toInt().toDouble() + 0.5
         else loc.z = location.z.toInt().toDouble() - 0.5
@@ -274,7 +272,7 @@ object WarpM {
 
     fun warpBlockedNames(name: String): Boolean {
         return when (name) {
-            "autoslot", "list", "resetmenu", "spawntowarp", "spawnvip", "get" ,"remove" ,"set" ,"setdisplay" ,"setslot" ,"setMaterial" ,"unsetslot" -> false
+            "autoslot", "list", "resetmenu", "spawntowarp", "get" ,"remove" ,"set" ,"setdisplay" ,"setslot" ,"setMaterial" ,"unsetslot" -> false
             else -> true
         }
     }

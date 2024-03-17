@@ -1,5 +1,5 @@
 name: NotzWarps
-version: '${version}'
+version: '1.0'
 main: notzwarps.Main
 commands:
   warp:
@@ -12,6 +12,7 @@ commands:
       - wps
       - warps
       - spawn
+      - spawnvip
   nwarp:
     description: erro na nwarp command
     usage: /nwarp
@@ -25,8 +26,6 @@ commands:
     description: erro no tpa
     usage: /tpa
     aliases:
-      - tp
-      - teleport
       - tpaccept
       - tpaceitar
       - tpacancel

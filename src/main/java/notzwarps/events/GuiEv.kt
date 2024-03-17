@@ -1,6 +1,6 @@
 package notzwarps.events
 
-import notzwarps.Main.Companion.menuM
+import notzapi.utils.MenuU.equalsMenu
 import notzwarps.managers.WarpM.teleport
 import notzwarps.managers.WarpM.warps
 import org.bukkit.entity.Player
@@ -12,7 +12,7 @@ class GuiEv : Listener {
 
     @EventHandler
     fun menuEvent(e: InventoryClickEvent) {
-        if (e.clickedInventory != null && menuM.equalsMenu("warpmenu", e.clickedInventory.title) && e.currentItem != null) {
+        if (e.clickedInventory != null && equalsMenu("warpmenu", e.clickedInventory.title) && e.currentItem != null) {
             e.isCancelled = true
 
             val p = e.whoClicked as Player

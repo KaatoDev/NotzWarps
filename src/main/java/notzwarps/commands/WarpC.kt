@@ -35,6 +35,12 @@ class WarpC : TabExecutor {
             else
                 send(p, "&cO Spawn ainda não foi setado.")
             return true
+        } else if (label == "spawnvip") {
+            if (warps.containsKey("spawnvip"))
+                teleport(p, "spawnvip")
+            else
+                send(p, "&cO SpawnVIP ainda não foi setado.")
+            return true
         }
 
         when (args!!.size) {

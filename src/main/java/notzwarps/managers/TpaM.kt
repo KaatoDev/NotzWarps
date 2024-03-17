@@ -5,14 +5,14 @@ import notzapi.utils.MessageU.c
 import notzapi.utils.MessageU.createHoverCMD
 import notzapi.utils.MessageU.send
 import notzwarps.Main
-import notzwarps.Main.Companion.cf
+import notzwarps.managers.WarpM.delay
+import notzwarps.managers.WarpM.delayPlayer
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 
 object TpaM : Runnable {
     private val instance: TpaM = this
-    private val delay = cf.config!!.getInt("teleport-delay") * 20L
 
     val tpaHoldings = hashMapOf<Player, Player>()
     val tpaTime = hashMapOf<Player, Int>()
@@ -28,7 +28,7 @@ object TpaM : Runnable {
     }
 
     private fun sendHoverRequest(p: Player, target: Player) {
-        val txt = TextComponent(c("\n&eO player &6${p.name}&e lhe enviou um pedido de TPA. \n&e  Desejas aceitar?  "))
+        val txt = TextComponent(c("\n &eO player &6${p.name}&e lhe enviou um pedido de TPA. \n&e    Desejas aceitar?  "))
 
         txt.addExtra(createHoverCMD("&2&lAceitar", arrayOf("&fAceita o TPA"), "/tpaccept", true))
         txt.addExtra(c(" &eou "))
@@ -49,18 +49,23 @@ object TpaM : Runnable {
     }
 
     fun tpadeny(p: Player, isTarget: Boolean) {
-        if (isTarget)
-            tpaHoldings.remove(tpaHoldings.keys.filter { tpaHoldings[it] == p }[0])
-        else tpaHoldings.remove(p)
+        val player = if (isTarget) tpaHoldings.keys.filter { tpaHoldings[it] == p }[0] else p
+
+        send(player, "&eVocê recusou o pedido de tpa de &f${if (isTarget) p.name else tpaHoldings[p]!!.name}&e.")
+        send(if (isTarget) p else tpaHoldings[p]!!, "&cO seu pedido de tpa para &f${if (isTarget) tpaHoldings.keys.filter { tpaHoldings[it] == p }[0].name else p.name}&c foi recusado.")
+
+        tpaHoldings.remove(player)
     }
 
     private fun teleportTpa(p: Player, target: Player) {
         tpaHoldings.remove(p)
-        send(target, "&eVocê aceitou o pedido de TPA de &f${p.name}&e.")
+        send(target, "&aVocê aceitou o pedido de TPA de &f${p.name}&a.")
 
         if (!p.hasPermission("notzwarps.nodelay")) {
-            tpaTime[p] = 4
+
+            tpaTime[p] = delayPlayer+1
             send(p, "&eVocê será teleportado em 3 segundos.")
+
             Bukkit.getServer().scheduler.runTaskLater(Main.plugin, {
                 if (tpaTime.containsKey(p)) {
                     p.teleport(target)

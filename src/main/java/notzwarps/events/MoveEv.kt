@@ -17,6 +17,7 @@ class MoveEv : Listener {
                 tpaTime.remove(e.player)
                 send(e.player, "&cSeu TPA foi cancelado.")
             }
+
             if (warpTime.containsKey(e.player)) {
                 warpTime.remove(e.player)
                 send(e.player, "&cSeu teleport foi cancelado.")
@@ -25,6 +26,6 @@ class MoveEv : Listener {
     }
 
     private fun walk(from: Location, to: Location): Boolean {
-        return from.x != to.x || from.y != to.y || from.z != to.z
+        return from.x != to.x && from.y != to.y && from.z != to.z
     }
 }

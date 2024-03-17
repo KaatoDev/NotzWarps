@@ -2,12 +2,10 @@ package notzwarps
 
 import notzapi.NotzAPI
 import notzapi.NotzAPI.Companion.itemManager
-import notzapi.NotzAPI.Companion.menuManager
 import notzapi.NotzAPI.Companion.messageManager
 import notzapi.NotzAPI.Companion.placeholderManager
 import notzapi.apis.NotzYAML
 import notzapi.managers.ItemManager
-import notzapi.managers.MenuManager
 import notzapi.managers.MessageManager
 import notzapi.managers.PlaceholderManager
 import notzapi.utils.MessageU
@@ -37,7 +35,6 @@ class Main : JavaPlugin() {
         lateinit var phM: PlaceholderManager
         lateinit var msgM: MessageManager
         lateinit var itemM: ItemManager
-        lateinit var menuM: MenuManager
     }
 
     override fun onEnable() {
@@ -51,7 +48,7 @@ class Main : JavaPlugin() {
         phM = placeholderManager
         msgM = messageManager
         itemM = itemManager
-        menuM = menuManager
+
 
         server.scheduler.runTaskLater(this, object : BukkitRunnable() {
             override fun run() {
@@ -60,7 +57,7 @@ class Main : JavaPlugin() {
 
                 setupMain()
             }
-        }, 2 * 20)
+        }, 5 * 20)
 
         Bukkit.getScheduler().runTaskTimer(this, TpaM.getInstance(), 0, 20)
     }
