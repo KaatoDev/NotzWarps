@@ -1,6 +1,7 @@
 spawnVip: true
 spawnToWarp: true
 autoSlot: true
+rows: 5 # if autoSlot is false
 warpList:
   - spawn
   - x1

@@ -4,7 +4,7 @@
 # {rarity} = pega a raridade da crate:
 # {default} = utiliza uma própria string já previamente setada no plugin (não tem como mudar isto de fora do plugin):
 # {quantity} = pega a quantia do item.
-prefix: '&6[&fNotzWarps&6]&f '
+prefix: '&6[&fNotzWarps&6]&f'
 messages:
   start: '&aCrate &6{name} &ainicializada.'
   erro: '&cErro ao inicializar a Crate &6{name}&c.'

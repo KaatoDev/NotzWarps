@@ -1,8 +1,8 @@
-package notzwarps.events
+package dev.kaato.notzwarps.events
 
-import notzapi.utils.MessageU.send
-import notzwarps.managers.TpaM.tpaTime
-import notzwarps.managers.WarpM.warpTime
+import dev.kaato.notzapi.utils.MessageU.send
+import dev.kaato.notzwarps.managers.TpaManager
+import dev.kaato.notzwarps.managers.WarpManager
 import org.bukkit.Location
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,14 +12,14 @@ class MoveEv : Listener {
 
     @EventHandler
     fun moveEvent(e: PlayerMoveEvent) {
-        if (walk(e.from, e.to)) {
-            if (tpaTime.containsKey(e.player)) {
-                tpaTime.remove(e.player)
+        if (walk(e.from, e.to!!)) {
+            if (TpaManager.tpaTime.containsKey(e.player)) {
+                TpaManager.tpaTime.remove(e.player)
                 send(e.player, "&cSeu TPA foi cancelado.")
             }
 
-            if (warpTime.containsKey(e.player)) {
-                warpTime.remove(e.player)
+            if (WarpManager.warpTime.containsKey(e.player)) {
+                WarpManager.warpTime.remove(e.player)
                 send(e.player, "&cSeu teleport foi cancelado.")
             }
         }
