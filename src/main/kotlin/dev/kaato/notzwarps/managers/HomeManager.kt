@@ -1,10 +1,10 @@
-package notzwarps.managers
+package dev.kaato.notzwarps.managers
 
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
 object HomeManager {
-    data class Home (val player: Player, val homes: HashMap<String, Location>)
+    data class Home(val player: Player, val homes: HashMap<String, Location>)
 
     val homes = hashMapOf<Player, Home>()
 

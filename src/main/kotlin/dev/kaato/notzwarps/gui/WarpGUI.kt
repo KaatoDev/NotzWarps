@@ -1,14 +1,16 @@
-package notzwarps.gui
+package dev.kaato.notzwarps.gui
 
-import notzapi.apis.NotzGUI
-import notzwarps.Main.Companion.wf
-import notzwarps.managers.WarpM.getWarpsSlot
+import dev.kaato.notzapi.apis.NotzGUI
+import dev.kaato.notzwarps.Main.Companion.wf
+import dev.kaato.notzwarps.managers.WarpManager.getWarpsSlot
 
 class WarpGUI {
     val menu: NotzGUI
 
     init {
-        val rows = if (getWarpsSlot().size%5 == 0) getWarpsSlot().size/5+2 else getWarpsSlot().size/5+3
+        val rows = if (!wf.config.getBoolean("autoSlot")) {
+            wf.config.getInt("rows").coerceAtMost(6)
+        } else if (getWarpsSlot().size % 5 == 0) getWarpsSlot().size / 5 + 2 else getWarpsSlot().size / 5 + 3
 
         menu = NotzGUI(null, rows, "warpmenu", "&9&l[&f&lWarps&9&l]")
         menu()
@@ -18,7 +20,7 @@ class WarpGUI {
         menu.setPanel(0, false)
         menu.setPanel(11, true)
 
-        if (wf.config!!.getBoolean("autoSlot")) {
+        if (wf.config.getBoolean("autoSlot")) {
             val wps = getWarpsSlot()
 
             val slots = when (wps.size) {
@@ -43,11 +45,10 @@ class WarpGUI {
 
             var a = 0
 
-            if (wps.size == 1)
-                menu.setItem(13, wps[0].item)
-            else if (slots.size == 1) wps.forEach {menu.setItem(it.slot!!, it.name)}
+            if (wps.size == 1) menu.setItem(13, wps[0].item)
+            else if (slots.size == 1) wps.forEach { menu.setItem(it.slot, it.name) }
             else wps.forEach { menu.setItem(slots[a++].toInt(), it.item) }
 
-        } else if (getWarpsSlot().isNotEmpty()) getWarpsSlot().forEach {menu.setItem(it.slot!!, it.name)}
+        } else if (getWarpsSlot().isNotEmpty()) getWarpsSlot().forEach { menu.setItem(it.slot, it.item) }
     }
 }

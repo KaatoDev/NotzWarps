@@ -1,6 +1,8 @@
 name: NotzWarps
-version: '1.0'
-main: notzwarps.Main
+version: '2.0'
+main: dev.kaato.notzwarps.Main
+#api-version: '1.18'
+
 commands:
   warp:
     description: erro na warp command
@@ -33,6 +35,7 @@ commands:
       - tparefuse
       - tpacancelar
       - tparecusar
+
 permissions:
   notzwarps.admin:
     description: perm admin

@@ -1,8 +1,8 @@
-package notzwarps.events
+package dev.kaato.notzwarps.events
 
-import notzapi.utils.MenuU.equalsMenu
-import notzwarps.managers.WarpM.teleport
-import notzwarps.managers.WarpM.warps
+import dev.kaato.notzapi.utils.MenuU.equalsMenu
+import dev.kaato.notzwarps.managers.WarpManager.teleport
+import dev.kaato.notzwarps.managers.WarpManager.warpListItems
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,14 +12,13 @@ class GuiEv : Listener {
 
     @EventHandler
     fun menuEvent(e: InventoryClickEvent) {
-        if (e.clickedInventory != null && equalsMenu("warpmenu", e.clickedInventory.title) && e.currentItem != null) {
+        if (e.clickedInventory != null && equalsMenu("warpmenu", e.view.title) && e.currentItem != null) {
             e.isCancelled = true
 
             val p = e.whoClicked as Player
             val item = e.currentItem
 
-            if (warps.values.map { it.item }.contains(item))
-                teleport(p, item)
+            if (warpListItems().contains(item)) teleport(p, item)
         }
     }
 }
