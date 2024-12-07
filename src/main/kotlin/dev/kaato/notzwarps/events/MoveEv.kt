@@ -15,12 +15,12 @@ class MoveEv : Listener {
         if (walk(e.from, e.to!!)) {
             if (TpaManager.tpaTime.containsKey(e.player)) {
                 TpaManager.tpaTime.remove(e.player)
-                send(e.player, "&cSeu TPA foi cancelado.")
+                send(e.player, "cancelTpa")
             }
 
             if (WarpManager.warpTime.containsKey(e.player)) {
                 WarpManager.warpTime.remove(e.player)
-                send(e.player, "&cSeu teleport foi cancelado.")
+                send(e.player, "cancelTp")
             }
         }
     }

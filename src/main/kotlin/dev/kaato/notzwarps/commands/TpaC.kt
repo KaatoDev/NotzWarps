@@ -26,12 +26,12 @@ class TpaC : TabExecutor {
                 when (a.size) {
                     0 -> {
                         if (TpaManager.containRequest(p)) TpaManager.tpaccept(p)
-                        else send(p, "&cNão há request de tpa.")
+                        else send(p, "noRequest1")
                     }
 
                     1 -> {
                         if (Bukkit.getPlayer(a[0]) != null && TpaManager.containRequest(p, Bukkit.getPlayer(a[0])!!)) TpaManager.tpaccept(p, Bukkit.getPlayer(a[0])!!)
-                        else send(p, "&cNão há request de tpa do player &f${a[0]}&c.")
+                        else send(p, "noRequest2", a[0])
                     }
 
                     else -> send(p, "&cUtilize apenas &f/&c$label &f(&cPlayer&f)")
@@ -42,12 +42,12 @@ class TpaC : TabExecutor {
                 when (a.size) {
                     0 -> {
                         if (TpaManager.containRequest(p)) TpaManager.tpadeny(p, true)
-                        else send(p, "&cNão há request de tpa.")
+                        else send(p, "noRequest1")
                     }
 
                     1 -> {
                         if (Bukkit.getPlayer(a[0]) != null && TpaManager.containRequest(p, Bukkit.getPlayer(a[0])!!)) TpaManager.tpadeny(Bukkit.getPlayer(a[0])!!, false)
-                        else send(p, "&cNão há request de tpa do player &f${a[0]}&c.")
+                        else send(p, "noRequest2",a[0])
                     }
 
                     else -> send(p, "&cUtilize apenas &f/&c$label &f(&cPlayer&f)")
@@ -57,7 +57,7 @@ class TpaC : TabExecutor {
             else -> help(p)
         }
         else if (a.size == 1) {
-            if (a[0].lowercase() == p.name.lowercase()) send(p, "&cVocê não pode mandar tpa a si próprio.")
+            if (a[0].lowercase() == p.name.lowercase()) send(p, "selfTpa")
             else if (Bukkit.getPlayer(a[0]) != null && Bukkit.getOnlinePlayers().map { it.name.lowercase() }.contains(a[0].lowercase())) TpaManager.sendTpaRequest(p, Bukkit.getPlayer(a[0])!!)
             else send(p, "&cO player &f${a[0]}&c não existe ou está offline.")
 
