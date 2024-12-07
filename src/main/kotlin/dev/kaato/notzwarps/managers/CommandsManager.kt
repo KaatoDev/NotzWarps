@@ -38,7 +38,7 @@ object CommandsManager {
     }
 
     fun setWarpLocCMD(p: Player, w: String) {
-        if (warpList().size < 31) {
+        if (containsWarp(w) || (!containsWarp(w) && warpList().size < 31)) {
             setWarp(w, p.location)
             send(p, "&aA warp &f$w&a foi criada com sucesso.")
         } else send(p, "&cVocê atingiu o limite máximo de 30 (${warpList().size}) warps.")
@@ -80,8 +80,8 @@ object CommandsManager {
     fun setWarpCMD(p: Player, warp: String) {
         when (setWarp(warp, p.location)) {
             true -> send(p, "&aA warp &f$warp&a foi criada com sucesso.")
-            false -> send(p, "&cEste nome de warp está bloqueado!")
-            null -> send(p, "&eA nova localização da &f$warp&e foi setada com sucesso.")
+            false -> send(p, "&eA nova localização da &f$warp&e foi setada com sucesso.")
+            null -> send(p, "&cEste nome de warp está bloqueado!")
         }
     }
 

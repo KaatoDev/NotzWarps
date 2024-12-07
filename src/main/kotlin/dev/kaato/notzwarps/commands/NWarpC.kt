@@ -48,7 +48,7 @@ class NWarpC : TabExecutor {
             1 -> when (a[0]) {
                 "list" -> listWarpCMD(p)
                 "resetmenu" -> resetMenu()
-                else -> help.invoke()
+                else -> help()
             }
 
             2 -> if (warp) when (a[1]) {
@@ -57,7 +57,7 @@ class NWarpC : TabExecutor {
                 "set" -> setWarpLocCMD(p, w)
                 "setmaterial" -> setwarpIconCMD(p, w)
                 "unsetslot" -> unsetWarpSlotCMD(p, w)
-                else -> help.invoke()
+                else -> help()
             }
             else when (a[0]) {
                 "autoslot" -> autoSlotCMD(p, a[1])
@@ -65,7 +65,7 @@ class NWarpC : TabExecutor {
                 "setlore" -> setWarpLoreCMD(p, a[1])
                 "spawntowarp" -> spawnToWarpCMD(p, a[1])
                 "spawnvip" -> spawnVipCMD(p, a[1])
-                else -> help.invoke()
+                else -> help()
             }
 
             3 -> if (warp) when (a[1]) {
@@ -73,10 +73,10 @@ class NWarpC : TabExecutor {
                 "setlore" -> setLoreCMD(p, w, a[2])
                 "setslot" -> setSlotCMD(p, w, a[2])
                 "setmaterial" -> setwarpIconCMD(p, w, a[2])
-                else -> help.invoke()
+                else -> help()
 
             } else if (a[0] == "setlore") setLoreCMD(p, a[1], a[2])
-            else help.invoke()
+            else help()
 
 
             else -> if (warp) {
@@ -84,9 +84,9 @@ class NWarpC : TabExecutor {
                     "setdisplay" -> setDisplayCMD(p, w, args.slice(2 until a.size).filterNotNull())
                     "setlore" -> setLoreCMD(p, w, a.slice(2 until a.size).toList())
 
-                    else -> help.invoke()
+                    else -> help()
                 }
-            } else help.invoke()
+            } else help()
         }
         return true
     }
