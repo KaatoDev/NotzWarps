@@ -4,6 +4,7 @@ import dev.kaato.notzapi.NotzAPI.Companion.plugin
 import dev.kaato.notzapi.apis.NotzItems.buildItem
 import dev.kaato.notzapi.utils.MessageU.c
 import dev.kaato.notzapi.utils.MessageU.send
+import dev.kaato.notzapi.utils.MessageU.set
 import dev.kaato.notzwarps.Main.Companion.cf
 import dev.kaato.notzwarps.Main.Companion.itemM
 import dev.kaato.notzwarps.Main.Companion.phM
@@ -16,6 +17,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
+import kotlin.math.roundToInt
 
 object WarpManager {
     data class Warp(val name: String, var display: String, var location: Location, var slot: Int, var item: ItemStack)
@@ -31,12 +33,12 @@ object WarpManager {
     }
 
     fun setWarp(warp: String, location: Location): Boolean? {
-        if (warps.containsKey(warp)) return null
-        if (warpBlockedNames(warp)) return false
+        if (warpBlockedNames(warp)) return null
+        val contains = !warps.containsKey(warp)
 
         createWarp(warp, location)
 
-        return true
+        return contains
     }
 
     fun getWarpIcon(w: String): ItemStack? {
@@ -65,34 +67,34 @@ object WarpManager {
      */
     fun teleport(player: Player, warpName: String) {
         if (warpName != "spawn" && !player.hasPermission("notzwarps.warp.$warpName")) {
-            send(player, "&cVocê não possui permissão para adentrar nesta warp!")
+            send(player, "permWarp")
             return
         }
 
         val warp = warps[warpName]!!
 
         if (warpTime.containsKey(player)) {
-            send(player, "&eJá há uma solicitação de teleport para warp em andamento.")
+            send(player, "onHold")
             return
         }
 
         if (!player.hasPermission("notzwarps.nodelay")) {
 
             warpTime[player] = delayPlayer + 1
-            send(player, "&eVocê será teleportado em 3 segundos.")
+            send(player, "teleporting")
 
             object : BukkitRunnable() {
                 override fun run() {
                     if (warpTime.containsKey(player)) {
                         player.teleport(warp.location)
-                        send(player, "&eVocê foi teleportado para a &lwarp ${warp.display}&e.")
+                        send(player, "warpTp", set("{${warp.name}}"))
                     }
                 }
             }.runTaskLater(plugin, delay)
 
         } else {
             player.teleport(warp.location)
-            send(player, "&eVocê foi teleportado para a &lwarp ${warp.display}&e.")
+            send(player, "warpTp", set("{${warp.name}}"))
         }
     }
 
@@ -114,10 +116,11 @@ object WarpManager {
      * @param location Local da warp a ser setada.
      */
     private fun createWarp(warp: String, location: Location) {
-
+        val adjustYaw = cf.config.getDouble("adjustYaw")
+        println(adjustYaw)
         val loc = location.clone()
         loc.pitch = 0F
-        loc.yaw = (location.yaw / 45 - 0.5).toInt() * 45F
+        loc.yaw = (location.yaw / 45 + adjustYaw).roundToInt() * 45F
         if (location.x.toInt() >= 0) loc.x = location.x.toInt().toDouble() + 0.5
         else loc.x = location.x.toInt().toDouble() - 0.5
         loc.y = location.y.toInt().toDouble() + 0.1
@@ -139,10 +142,13 @@ object WarpManager {
             warps[warp] = Warp(warp, c("&e&l$warp"), loc, 13, buildItemWarp(warp, true))
             wf.config.set("warps.$warp.slot", -1)
             wf.config.set("warps.$warp.display", warps[warp]!!.display)
+            wf.saveConfig()
 
             if (warps[warp]!!.slot >= 0) resetMenu()
 
-        } else warps[warp]!!.location = loc
+        } else {
+            warps[warp]!!.location = loc
+        }
 
         wf.config.set("warps.$warp.location.world", warps[warp]!!.location.world?.name)
         wf.config.set("warps.$warp.location.x", warps[warp]!!.location.x)

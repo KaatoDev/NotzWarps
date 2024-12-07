@@ -108,7 +108,6 @@ class Main : JavaPlugin() {
         )
         Bukkit.getOnlinePlayers().forEach {
             if (isAdmin(it)) {
-                it.sendMessage(" ")
                 sendHoverURL(it, set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
             }
         }
