@@ -78,7 +78,7 @@ object WarpManager {
             return
         }
 
-        if (!player.hasPermission("notzwarps.nodelay")) {
+        if (!player.hasPermission("notzwarps.nodelay") || player.hasPermission("notzwarps.vip")) {
 
             warpTime[player] = delayPlayer + 1
             send(player, "teleporting")
@@ -87,14 +87,14 @@ object WarpManager {
                 override fun run() {
                     if (warpTime.containsKey(player)) {
                         player.teleport(warp.location)
-                        send(player, "warpTp", set("{${warp.name}}"))
+                        send(player, "warpTp", set(warp.display))
                     }
                 }
             }.runTaskLater(plugin, delay)
 
         } else {
             player.teleport(warp.location)
-            send(player, "warpTp", set("{${warp.name}}"))
+            send(player, "warpTp", set(warp.display))
         }
     }
 
@@ -117,7 +117,7 @@ object WarpManager {
      */
     private fun createWarp(warp: String, location: Location) {
         val adjustYaw = cf.config.getDouble("adjustYaw")
-        println(adjustYaw)
+//        println(adjustYaw)
         val loc = location.clone()
         loc.pitch = 0F
         loc.yaw = (location.yaw / 45 + adjustYaw).roundToInt() * 45F
@@ -194,6 +194,8 @@ object WarpManager {
 
         itemM.addItem(warp)
         w.item = buildItemWarp(warp, false)
+
+        warps[warp] = w
         resetMenu()
 
         return true
@@ -211,6 +213,7 @@ object WarpManager {
         wf.config.set("warps.$warp.slot", slot)
         wf.saveConfig()
 
+        warps[warp] = w
         resetMenu()
         return true
     }
@@ -223,10 +226,32 @@ object WarpManager {
     fun editWarp(warp: String, material: Material): Boolean {
         val w = warps[warp] ?: return false
 
-        w.item = buildItemWarp(warp, false)
         wf.config.set("warps.$warp.item.material", material.name)
         wf.saveConfig()
 
+        itemM.addItem(warp)
+        w.item = buildItemWarp(warp, false)
+
+        warps[warp] = w
+        resetMenu()
+        return true
+    }
+
+    /**
+     * Altera o encantamento do item de uma warp existente.
+     * @param warp Nome da warp a ser editada.
+     * @param enchant Se é encantado ou não.
+     */
+    fun editWarp(warp: String, enchant: Boolean): Boolean {
+        val w = warps[warp] ?: return false
+
+        wf.config.set("warps.$warp.item.enchanted", enchant)
+        wf.saveConfig()
+
+        itemM.addItem(warp)
+        w.item = buildItemWarp(warp, false)
+
+        warps[warp] = w
         resetMenu()
         return true
     }
@@ -237,10 +262,13 @@ object WarpManager {
      * @param lore A nova lore do item da warp no menu.
      */
     fun setWarpLore(warp: String, lore: List<String>): Boolean {
-        if (!warps.containsKey(warp)) return false
+        val w = warps[warp] ?: return false
 
         wf.config.set("warps.$warp.item.lore", lore)
         wf.saveConfig()
+
+        itemM.addItem(warp)
+        w.item = buildItemWarp(warp, false)
 
         resetMenu()
         return true
@@ -255,7 +283,7 @@ object WarpManager {
             wf.config.set("warps.$it.item.lore", lore)
         }
         wf.saveConfig()
-        warps.keys.forEach { warps[it]!!.item = buildItemWarp(it, false) }
+        warps.keys.forEach { itemM.addItem(it); warps[it]!!.item = buildItemWarp(it, false) }
 
         resetMenu()
     }
@@ -350,10 +378,10 @@ object WarpManager {
         }
 
         if (warpsList.isEmpty()) {
-            Bukkit.getConsoleSender().sendMessage(c("&cNenhuma das warps foram carregadas pois não existe os mundos requisitados."))
+            Bukkit.getConsoleSender().sendMessage(c("&cNone of the warps were loaded because the requested worlds do not exist."))
             return
         } else if (warpsListOff.isNotEmpty()) warpsListOff.forEach {
-            Bukkit.getConsoleSender().sendMessage(c("&cA warp &f$it&c não pôde ser carregada pois o mundo &f${wf.config.getString("warps.$it.location.world")}&c não existe."))
+            Bukkit.getConsoleSender().sendMessage(c("&cThe warp &f$it &ccould not be loaded because the world &f${wf.config.getString("warps.$it.location.world")} &cdoes not exist."))
         }
 
         warpsList.forEach {
@@ -385,10 +413,10 @@ object WarpManager {
         val ender_eye = Material.entries.find { it.name.contains("ENDER") && it.name.contains("EYE") } ?: Material.STONE
 
         if (!wf.config.contains("warps.$warp.item.material") || create) {
-            item = buildItem(ender_eye, "&e&l$warp", listOf("&7&oClique para ir", "&7&oaté a warp."), false)
+            item = buildItem(ender_eye, "&e&l$warp", listOf("&7&oClick to go", "&7&oto the warp."), false)
             wf.config.set("warps.$warp.item.material", ender_eye.name)
             wf.config.set("warps.$warp.item.enchanted", false)
-            wf.config.set("warps.$warp.item.lore", listOf("&7&oClique para ir", "&7&oaté a warp."))
+            wf.config.set("warps.$warp.item.lore", listOf("&7&oClick to go", "&7&oto the warp."))
             wf.saveConfig()
 
         } else item = buildItem(

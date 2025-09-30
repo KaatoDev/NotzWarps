@@ -71,7 +71,7 @@ class Main : JavaPlugin() {
         regEvents()
         regTab()
         letters()
-        if (!Bukkit.getOnlinePlayers().isEmpty()) Bukkit.getOnlinePlayers().filter { it.hasPermission("notzwarps.admin") }.forEach { send(it, "&aAs warps foram inicializadas.") }
+        if (!Bukkit.getOnlinePlayers().isEmpty()) Bukkit.getOnlinePlayers().filter { it.hasPermission("notzwarps.admin") }.forEach { send(it, "&aWarps have been initialized.") }
     }
 
 
@@ -98,17 +98,19 @@ class Main : JavaPlugin() {
         send(
             Bukkit.getConsoleSender(), """
                 &2Inicializado com sucesso.
+                &2Initialized successfully.
                 &f┳┓    &6┓ ┏       
                 &f┃┃┏┓╋┓&6┃┃┃┏┓┏┓┏┓┏
                 &f┛┗┗┛┗┗&6┗┻┛┗┻┛ ┣┛┛
                 
                 ${set("{prefix}")} &6Para mais plugins como este, acesse &bhttps://kaato.dev/plugins&6!!
+                ${set("{prefix}")} &6For more plugins like this, visit &bhttps://kaato.dev/plugins&6!!
                 
             """.trimIndent()
         )
         Bukkit.getOnlinePlayers().forEach {
             if (isAdmin(it)) {
-                sendHoverURL(it, set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
+                sendHoverURL(it, set("{prefix}") + " &6For more plugins like this, visit &e&oour website&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
             }
         }
     }

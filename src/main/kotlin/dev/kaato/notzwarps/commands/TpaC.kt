@@ -34,7 +34,7 @@ class TpaC : TabExecutor {
                         else send(p, "noRequest2", a[0])
                     }
 
-                    else -> send(p, "&cUtilize apenas &f/&c$label &f(&cPlayer&f)")
+                    else -> send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
                 }
             }
 
@@ -47,10 +47,10 @@ class TpaC : TabExecutor {
 
                     1 -> {
                         if (Bukkit.getPlayer(a[0]) != null && TpaManager.containRequest(p, Bukkit.getPlayer(a[0])!!)) TpaManager.tpadeny(Bukkit.getPlayer(a[0])!!, false)
-                        else send(p, "noRequest2",a[0])
+                        else send(p, "noRequest2", a[0])
                     }
 
-                    else -> send(p, "&cUtilize apenas &f/&c$label &f(&cPlayer&f)")
+                    else -> send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
                 }
             }
 
@@ -59,9 +59,9 @@ class TpaC : TabExecutor {
         else if (a.size == 1) {
             if (a[0].lowercase() == p.name.lowercase()) send(p, "selfTpa")
             else if (Bukkit.getPlayer(a[0]) != null && Bukkit.getOnlinePlayers().map { it.name.lowercase() }.contains(a[0].lowercase())) TpaManager.sendTpaRequest(p, Bukkit.getPlayer(a[0])!!)
-            else send(p, "&cO player &f${a[0]}&c não existe ou está offline.")
+            else send(p, "playerOffline", a[0])
 
-        } else send(p, "&cUtilize &f/&ctpa &f<&cPlayer&f>")
+        } else send(p, "&cUse &f/&ctpa &f<&cPlayer&f>")
 
         return true
     }
@@ -74,10 +74,10 @@ class TpaC : TabExecutor {
     private fun help(p: Player) {
         sendHeader(
             p, """
-            &f/&etpaceitar &7- Aceita o tpa requisitado.
-            &f/&etpaceitar &f<&ePlayer&f> &7- Aceita o tpa de um player específico.
-            &f/&etparecusar &7- Recusa o tpa requisitado.
-            &f/&etparecusar &f<&ePlayer&f> &7- Recusa o tpa de um player específico.
+            &f/&etpaccept &7- Accepts the requested TPA.
+            &f/&etpaccept &f<&ePlayer&f> &7- Accepts the tpa of a specific player.
+            &f/&etpadeny &7- Denies the requested TPA.
+            &f/&etpadeny &f<&ePlayer&f> &7- Denies the TPA for a specific player.
         """.trimIndent()
         )
     }
@@ -85,10 +85,10 @@ class TpaC : TabExecutor {
     private fun helpTp(p: Player) {
         sendHeader(
             p, """
-            &f/&etp &f<&ePlayer&f> &7- Teleporte-se a um player.
-            &f/&etp &f<&ePlayer&f> (&ePlayer&f) &7- Teleporte um player à outro.
-            &f/&etp &f<&eX&f> <&eZ&f> &7- Teleporte-se a um coordenada com a mesma altura.
-            &f/&etp &f<&eX&f> <&eY&f> <&eZ&f> &7- Teleporte-se a uma coordenada exata.
+            &f/&etp &f<&ePlayer&f> &7- Teleport to a player.
+            &f/&etp &f<&ePlayer&f> (&ePlayer&f) &7- Teleport one player to another.
+            &f/&etp &f<&eX&f> <&eZ&f> &7- Teleport to a coordinate with the same height.
+            &f/&etp &f<&eX&f> <&eY&f> <&eZ&f> &7- Teleport to an exact coordinate.
         """.trimIndent()
         )
     }

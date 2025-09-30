@@ -1,23 +1,28 @@
 prefix: '&6[&fNotzWarps&6]&f'
 
-# placeholders: Utilize {default} como placeholder padrão, explicação:
-# Na warp: pega o display da warp citada.
-# No player: pega o nick do OUTRO player.
-# OBS: do player executor do comando é {player_name}/{player_displayname}
+# Placeholders: Use {default} as the default placeholder, explanation:
+# For warps: get the warp display.
+# For players: get the nickname of the OTHER player.
+# OBS: for the player executing the commands is {player_name} or {player_displayname}
+
 messages:
-  warpTp: '&eVocê foi teleportado para a &l{default}&e.'
-  playerTp1: "&eVocê foi teleportado para o player &a{default}&e."
-  playerTp2: "&eO player &a{default} &efoi teleportado até você."
-  permWarp: "&cVocê não possui permissão para adentrar nesta warp!"
-  onHold: "&eJá há uma solicitação de teleport para warp em andamento."
-  teleporting: "&eVocê será teleportado em 3 segundos."
-  acceptTpa: "&aVocê aceitou o pedido de TPA de &f{default}&a."
-  refuseTpa1: "&eVocê recusou o pedido de tpa de &f{default}&e."
-  refuseTpa2: "&cO seu pedido de tpa para &f{default} &cfoi recusado"
-  alreadySent: "&eVocê já enviou um pedido de tpa para este player."
-  requestTpa: "&eUm pedido de TPA foi enviado ao player &f{default}&e."
-  cancelTpa: "&cSeu TPA foi cancelado."
-  cancelTp: "&cSeu teleport foi cancelado."
-  noRequest1: "&cNão há request de tpa."
-  noRequest2: "&cNão há request de tpa do player &f{default}&c."
-  selfTpa: "&cVocê não pode mandar tpa a si próprio."
+  warpTp: '&eYou have been teleported to &f&lWarp &l{default}&e.'
+  playerTp1: "&eYou have been teleported to player &a{default}&e."
+  playerTp2: "&eThe player &a{default} &ewas teleported to you."
+  permWarp: "&cYou don't have permission to enter this warp.!"
+  onHold: "&eThere is already a warp teleport request in progress.."
+  teleporting: "&eYou will be teleported in 3 seconds."
+  acceptTpa: "&aYou have accepted the TPA request from &f{default}&a."
+  refuseTpa1: "&eYou refused the tpa request of &f{default}&e."
+  refuseTpa2: "&cYour tpa request for &f{default} &cwas refused"
+  alreadySent: "&eYou have already sent a tpa request to this player."
+  requestTpa: "&eA TPA request was sent to player &f{default}&e."
+  cancelTpa: "&cYour TPA has been canceled."
+  cancelTp: "&cYour teleport has been canceled."
+  noRequest1: "&cThere is no tpa request."
+  noRequest2: "&cThere is no tpa request from the player &f{default}&c."
+  selfTpa: "&cYou can't send tpa to yourself."
+  playerOffline: "&cThe player &f{default} &cdoes not exist or is offline."
+  warpNotFound: "&cThere is no warp named &f{default}&c."
+  warpNotFound2: "&cThis warp was not found."
+  removeWarp: "&eThe warp &f{default} &ehas been successfully removed."

@@ -30,9 +30,9 @@ object TpaManager : Runnable {
     private fun sendHoverRequest(p: Player, target: Player) {
         val txt = TextComponent(c("\n &eO player &6${p.name}&e lhe enviou um pedido de TPA. \n&e    Deseja aceitar?  "))
 
-        txt.addExtra(createHoverCMD("&2&lAceitar", arrayOf("&fAceita o TPA"), "/tpaccept", true))
-        txt.addExtra(c(" &eou "))
-        txt.addExtra(createHoverCMD("&c&lRecusar", arrayOf("&fRecusa o TPA"), "/tpadeny", true))
+        txt.addExtra(createHoverCMD("&2&lAccept", arrayOf("&fAccepts TPA"), "/tpaccept", true))
+        txt.addExtra(c(" &eor "))
+        txt.addExtra(createHoverCMD("&c&lRefuse", arrayOf("&fRefuse TPA"), "/tpadeny", true))
         txt.addExtra(c("\n&r"))
 
         target.spigot().sendMessage(txt)
