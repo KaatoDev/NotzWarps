@@ -11,6 +11,7 @@ import dev.kaato.notzwarps.managers.CommandsManager.setSlotCMD
 import dev.kaato.notzwarps.managers.CommandsManager.setWarpCMD
 import dev.kaato.notzwarps.managers.CommandsManager.setWarpLocCMD
 import dev.kaato.notzwarps.managers.CommandsManager.setWarpLoreCMD
+import dev.kaato.notzwarps.managers.CommandsManager.setwarpEnchantCMD
 import dev.kaato.notzwarps.managers.CommandsManager.setwarpIconCMD
 import dev.kaato.notzwarps.managers.CommandsManager.spawnToWarpCMD
 import dev.kaato.notzwarps.managers.CommandsManager.spawnVipCMD
@@ -31,7 +32,7 @@ class NWarpC : TabExecutor {
         val a = args?.map { it?.lowercase() ?: "" }
 
         if (!p.hasPermission("notzwarps.admin")) {
-            p.sendMessage("&cSem permissão.")
+            p.sendMessage("&cNo permission.")
             return false
         }
 
@@ -69,7 +70,8 @@ class NWarpC : TabExecutor {
             }
 
             3 -> if (warp) when (a[1]) {
-                "setdisplay" -> setDisplayCMD(p, w, args[2]?:"")
+                "setdisplay" -> setDisplayCMD(p, w, args[2] ?: "")
+                "setenchant" -> setwarpEnchantCMD(p, w, a[2])
                 "setlore" -> setLoreCMD(p, w, a[2])
                 "setslot" -> setSlotCMD(p, w, a[2])
                 "setmaterial" -> setwarpIconCMD(p, w, a[2])
@@ -97,29 +99,30 @@ class NWarpC : TabExecutor {
     }
 
     private fun help(p: Player, a: List<String>? = null, warp: String? = null) {
-        val utilize = "&eUtilize &f/&enw &e"
+        val utilize = "&eUse &f/&enw &e"
         val help = """
-            &7+ &f<&ewarp&f> &7- Para ver as opções de customização da warp.
-            &7+ &eautoslot &f<&eon&f/&eoff&f> &7- Habilita ou desabilita a auto distribuição das warps no menu.
-            &7+ &elist &7- Lista as warps que estão habilitadas.
-            &7+ &eresetmenu &7- Reseta o menu das warps.
-            &7+ &eset &f<&ewarp&f> &7- Seta a localização atual numa warp existente ou nova, criando-a.
-            &7+ &esetlore &f<&elore...&f> &7- Altera a lore padrão das warps. (Cuidado pois reescreve as existentes.)
-            &7+ &espawntowarp &f<&ewarp&f/&eon&f/&eoff&f> &7- Habilita, desabilita ou altera a warp de spawn padrão.
-            &7+ &espawnvip &f<&ewarp&f/&eon&f/&eoff&f> &7- Habilita, desabilita ou altera a warp de spawn padrão dos players VIPs.
+            &7+ &f<&ewarp&f> &7- To see the warp customization options.
+            &7+ &eautoslot &f<&eon&f/&eoff&f> &7- Enables/disables the auto-sort of warps in the Warp GUI.
+            &7+ &elist &7- List all enabled warps.
+            &7+ &eresetmenu &7- Reset the warp menu.
+            &7+ &eset &f<&ewarp&f> &7- Sets the current location in a new or existing warp, creating it.
+            &7+ &esetenchant &f<&eon&f/&eoff&f> &7- Changes if the warp item is enchanted or not.
+            &7+ &esetlore &f<&elore...&f> &7- Changes the default lore of warps (be careful as it rewrites existing ones).
+            &7+ &espawntowarp &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables/disables or changes the default spawn warp.
+            &7+ &espawnvip &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables, disables, or changes the default spawn warp for VIP players.
         """.trimIndent()
 
         if (a.isNullOrEmpty()) sendHeader(p, "$utilize &7+\n$help")
         else if (!warp.isNullOrEmpty()) helpWarps(p, a, warp)
         else sendHeader(
             p, utilize + when (a[0]) {
-                "autoslot" -> "autoslot &f<&eon&f/&eoff&f> &7- Habilita ou desabilita a auto distribuição das warps no menu."
-                "list" -> "list &7- Lista as warps que estão habilitadas."
-                "resetmenu" -> "resetmenu &7- Reseta o menu das warps."
-                "set" -> "set &f<&ewarp&f> &7- Seta a localização atual numa warp existente ou nova, criando-a."
-                "setlore" -> "setlore &f<&elore...&f> &7- Altera a lore padrão das warps. (Cuidado pois reescreve as existentes.)"
-                "spawntowarp" -> "spawntowarp &f<&ewarp&f/&eon&f/&eoff&f> &7- Habilita, desabilita ou altera a warp de spawn padrão."
-                "spawnvip" -> "spawnvip &f<&ewarp&f/&eon&f/&eoff&f> &7- Habilita, desabilita ou altera a warp de spawn padrão dos players VIPs."
+                "autoslot" -> "autoslot &f<&eon&f/&eoff&f> &7- Enables/disables the auto-sort of warps in the Warp GUI"
+                "list" -> "list &7- List all enabled warps"
+                "resetmenu" -> "resetmenu &7- Reset the warp menu."
+                "set" -> "set &f<&ewarp&f> &7- Sets the current location in an new or existing warp, creating it."
+                "setlore" -> "setlore &f<&elore...&f> &7- Changes the default lore of warps (be careful as it rewrites existing ones)."
+                "spawntowarp" -> "spawntowarp &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables/disables or changes the default spawn warp."
+                "spawnvip" -> "spawnvip &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables, disables, or changes the default spawn warp for VIP players."
 
                 else -> "&7+\n$help"
             }
@@ -129,27 +132,28 @@ class NWarpC : TabExecutor {
     private fun helpWarps(p: Player, a: List<String>, warp: String) {
         val utilize = "&eUtilize &f/&enw &a$warp &e"
         val help = """
-            &7+ &eget &7- Recebe o item da warp, a qual é setada no menu.
-            &7+ &eremove &7- Deleta uma warp.
-            &7+ &eset &7- Seta a localização atual na warp.
-            &7+ &esetdisplay &f<&edisplay...&f> &7- Altera o display do item de uma warp.
-            &7+ &esetlore &f<&elore...&f> &7- Altera a lore do item de uma warp.
-            &7+ &esetslot &f<&eslot&f> &7- Altera o slot padrão de uma warp no menu.
-            &7+ &esetMaterial &f<&ematerial&f> &7- Altera o material do item de uma warp no menu.
-            &7+ &eunsetslot &7- Resetará o slot da warp, não será mostrado no menu.
+            &7+ &eget &7- Get the warp's item.
+            &7+ &eremove &7- Deletes the warp.
+            &7+ &eset &7- Sets the current location in the warp.
+            &7+ &esetdisplay &f<&edisplay...&f> &7- Change warp's item display.
+            &7+ &esetenchant &f<&eon&f/&eoff&f> &7- Changes if the warp item is enchanted or not.
+            &7+ &esetlore &f<&elore...&f> &7- Change warp's item lore.
+            &7+ &esetslot &f<&eslot&f> &7- Changes warp's slot.
+            &7+ &esetMaterial &f<&ematerial&f> &7- Changes the warp's item material.
+            &7+ &eunsetslot &7- Resets the warp's slot (useful to hide it if auto-sort is enabled).
         """.trimIndent()
 
         if (a.size == 1) sendHeader(p, "$utilize &7+\n$help")
         else sendHeader(
             p, utilize + when (a[1]) {
-                "get" -> "get &7- Recebe o item da warp, a qual é setada no menu."
-                "remove" -> "remove &7- Deleta uma warp."
-                "set" -> "set &7- Seta a localização atual na warp."
-                "setdisplay" -> "setdisplay &f<&edisplay...&f> &7- Altera o display do item de uma warp."
-                "setlore" -> "setlore &f<&elore...&f> &7- Altera a lore do item de uma warp."
-                "setslot" -> "setslot &f<&eslot&f> &7- Altera o slot padrão de uma warp no menu."
-                "setMaterial" -> "setMaterial &f<&ematerial&f> &7- Altera o material do item de uma warp no menu."
-                "unsetslot" -> "unsetslot &7- Resetará o slot da warp, não será mostrado no menu."
+                "get" -> "get &7- Get the warp's item."
+                "remove" -> "remove &7- Deletes the warp."
+                "set" -> "set &7- Sets the current location in the warp."
+                "setdisplay" -> "setdisplay &f<&edisplay...&f> &7- Change warp's item display."
+                "setlore" -> "setlore &f<&elore...&f> &7- Change warp's item lore."
+                "setslot" -> "setslot &f<&eslot&f> &7- Changes warp's slot."
+                "setMaterial" -> "setMaterial &f<&ematerial&f> &7- Changes the warp's item material."
+                "unsetslot" -> "unsetslot &7- Resets the warp's slot (useful to hide it if auto-sort is enabled)."
 
                 else -> "&7+\n$help"
             }
