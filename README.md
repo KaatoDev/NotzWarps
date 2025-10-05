@@ -14,7 +14,20 @@ It has a menu that allows you to manually set or automatically distribute warp s
 ### `TPAs`
 Intuitive TPA system with hover and clickable messages to accept or decline. Several aliases to accept and reject TPAs. Delay when teleporting to players, but players with VIP permission will teleport instantly. Teleport cancellation when moving.
 
+<br/>
+
+## Images
+![Warp menu](https://cdn.modrinth.com/data/cached_images/826bbdc9b5b6710e61a4e62c10c3e3886aa2f8df.png)
+![Warp menu*](https://cdn.modrinth.com/data/cached_images/5dbf822ed270c3ac503131ff3ed3543bd117245b.png)
+
 </div>
+
+<br/>
+
+## Placeholders
+ - `{default}` - Warp display or nickname from the OTHER player.
+ - `{player_name}` - Name of the player that is executing the command.
+ - `{player_displayname}` - Displayname of the player that is executing the command.
 
 <br/>
 
@@ -32,7 +45,7 @@ Intuitive TPA system with hover and clickable messages to accept or decline. Sev
 
 ### `/warps`
  - Access to the Warp GUI.
-- 
+
 ### `/spawn`
  - Teleport to the Spawn.
 
