@@ -1,9 +1,9 @@
 package dev.kaato.notzwarps.managers
 
-import dev.kaato.notzapi.NotzAPI.Companion.plugin
-import dev.kaato.notzapi.utils.MessageU.c
-import dev.kaato.notzapi.utils.MessageU.createHoverCMD
-import dev.kaato.notzapi.utils.MessageU.send
+import dev.kaato.notzapi.utils.MessageU.Companion.c
+import dev.kaato.notzapi.utils.MessageU.Companion.createHoverCMD
+import dev.kaato.notzwarps.Main.Companion.messageU
+import dev.kaato.notzwarps.Main.Companion.plugin
 import dev.kaato.notzwarps.managers.WarpManager.delay
 import dev.kaato.notzwarps.managers.WarpManager.delayPlayer
 import dev.kaato.notzwarps.managers.WarpManager.runWarp
@@ -19,9 +19,8 @@ object TpaManager : Runnable {
     val tpaTime = hashMapOf<Player, Int>()
 
     fun sendTpaRequest(p: Player, target: Player) {
-        if (containRequest(p) && tpaHoldings[p] == target) send(p, "alreadySent")
-        else send(p, "requestTpa", target.name)
-
+        if (containRequest(p) && tpaHoldings[p] == target) messageU.send(p, "alreadySent")
+        else messageU.send(p, "requestTpa", target.name)
 
         tpaHoldings[p] = target
         sendHoverRequest(p, target)
@@ -51,35 +50,35 @@ object TpaManager : Runnable {
     fun tpadeny(p: Player, isTarget: Boolean) {
         val player = if (isTarget) tpaHoldings.keys.filter { tpaHoldings[it] == p }[0] else p
 
-        send(player, "refuseTpa1", if (isTarget) p.name else tpaHoldings[p]!!.name)
-        send(if (isTarget) p else tpaHoldings[p]!!, "refuseTpa2",if (isTarget) tpaHoldings.keys.filter { tpaHoldings[it] == p }[0].name else p.name)
+        messageU.send(player, "refuseTpa1", if (isTarget) p.name else tpaHoldings[p]!!.name)
+        messageU.send(if (isTarget) p else tpaHoldings[p]!!, "refuseTpa2",if (isTarget) tpaHoldings.keys.filter { tpaHoldings[it] == p }[0].name else p.name)
 
         tpaHoldings.remove(player)
     }
 
     private fun teleportTpa(p: Player, target: Player) {
         tpaHoldings.remove(p)
-        send(target, "acceptTpa", p.name)
+        messageU.send(target, "acceptTpa", p.name)
 
         if (!p.hasPermission("notzwarps.nodelay")) {
 
             tpaTime[p] = delayPlayer + 1
-            send(p, "teleporting")
+            messageU.send(p, "teleporting")
 
             object : BukkitRunnable() {
                 override fun run() {
                     if (tpaTime.containsKey(p)) {
                         p.teleport(target)
-                        send(p, "playerTp1", target.name)
-                        send(target, "playerTp2", p.name)
+                        messageU.send(p, "playerTp1", target.name)
+                        messageU.send(target, "playerTp2", p.name)
                     }
                 }
             }.runTaskLater(plugin, delay)
 
         } else {
             p.teleport(target)
-            send(p, "playerTp1", target.name)
-            send(target, "playerTp2", p.name)
+            messageU.send(p, "playerTp1", target.name)
+            messageU.send(target, "playerTp2", p.name)
         }
     }
 

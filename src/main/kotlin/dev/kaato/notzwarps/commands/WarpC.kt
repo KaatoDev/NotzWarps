@@ -1,7 +1,6 @@
 package dev.kaato.notzwarps.commands
 
-import dev.kaato.notzapi.utils.MessageU.send
-import dev.kaato.notzapi.utils.MessageU.sendHeader
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.Main.Companion.warpGUI
 import dev.kaato.notzwarps.managers.WarpManager.containsWarp
 import dev.kaato.notzwarps.managers.WarpManager.teleport
@@ -26,13 +25,13 @@ class WarpC : TabExecutor {
             if (containsWarp("spawn"))
                 teleport(p, "spawn")
             else
-                send(p, "&cSpawn has not yet been set.")
+                messageU.send(p, "&cSpawn has not yet been set.")
             return true
         } else if (label == "spawnvip") {
             if (containsWarp("spawnvip"))
                 teleport(p, "spawnvip")
             else
-                send(p, "&cSpawnVIP has not yet been set.")
+                messageU.send(p, "&cSpawnVIP has not yet been set.")
             return true
         }
 
@@ -45,16 +44,16 @@ class WarpC : TabExecutor {
             1 -> {
                 if (containsWarp(a[0].lowercase()))
                     teleport(p, a[0].lowercase())
-                else send(p, "warpNotFound", a[0])
+                else messageU.send(p, "warpNotFound", a[0])
             }
 
             2 -> {
                 if (p.hasPermission("notzwarps.admin")) {
                     if (!containsWarp(a[0]))
-                        send(p, "warpNotFound", a[0])
+                        messageU.send(p, "warpNotFound", a[0])
                     else if (Bukkit.getPlayer(a[1]) != null)
                         teleport(Bukkit.getPlayer(a[1])!!, a[0])
-                    else send(p, "playerOffline", a[1])
+                    else messageU.send(p, "playerOffline", a[1])
 
                 } else help.invoke()
             }
@@ -74,7 +73,7 @@ class WarpC : TabExecutor {
     }
 
     private fun help(p: Player) {
-        sendHeader(
+        messageU.sendHeader(
             p, """
             &f/&ewarp &7- Open warp menu.
             &f/&ewarp &f<&ewarp&f> &7- Teleports directly to a warp.

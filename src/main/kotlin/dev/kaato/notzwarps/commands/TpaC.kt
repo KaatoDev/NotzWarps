@@ -1,7 +1,6 @@
 package dev.kaato.notzwarps.commands
 
-import dev.kaato.notzapi.utils.MessageU.send
-import dev.kaato.notzapi.utils.MessageU.sendHeader
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.managers.TpaManager
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -14,7 +13,7 @@ class TpaC : TabExecutor {
     override fun onCommand(p: CommandSender?, cmd: Command?, label: String?, args: Array<out String?>?): Boolean {
         if (p !is Player) return false
 
-        val a = args?.map { it?.lowercase() }?.filterNotNull()
+        val a = args?.mapNotNull { it?.lowercase() }
 
         if (a == null) {
             help(p)
@@ -26,15 +25,15 @@ class TpaC : TabExecutor {
                 when (a.size) {
                     0 -> {
                         if (TpaManager.containRequest(p)) TpaManager.tpaccept(p)
-                        else send(p, "noRequest1")
+                        else messageU.send(p, "noRequest1")
                     }
 
                     1 -> {
                         if (Bukkit.getPlayer(a[0]) != null && TpaManager.containRequest(p, Bukkit.getPlayer(a[0])!!)) TpaManager.tpaccept(p, Bukkit.getPlayer(a[0])!!)
-                        else send(p, "noRequest2", a[0])
+                        else messageU.send(p, "noRequest2", a[0])
                     }
 
-                    else -> send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
+                    else -> messageU.send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
                 }
             }
 
@@ -42,26 +41,26 @@ class TpaC : TabExecutor {
                 when (a.size) {
                     0 -> {
                         if (TpaManager.containRequest(p)) TpaManager.tpadeny(p, true)
-                        else send(p, "noRequest1")
+                        else messageU.send(p, "noRequest1")
                     }
 
                     1 -> {
                         if (Bukkit.getPlayer(a[0]) != null && TpaManager.containRequest(p, Bukkit.getPlayer(a[0])!!)) TpaManager.tpadeny(Bukkit.getPlayer(a[0])!!, false)
-                        else send(p, "noRequest2", a[0])
+                        else messageU.send(p, "noRequest2", a[0])
                     }
 
-                    else -> send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
+                    else -> messageU.send(p, "&cUse only &f/&c$label &f(&cPlayer&f)")
                 }
             }
 
             else -> help(p)
         }
         else if (a.size == 1) {
-            if (a[0].lowercase() == p.name.lowercase()) send(p, "selfTpa")
+            if (a[0].lowercase() == p.name.lowercase()) messageU.send(p, "selfTpa")
             else if (Bukkit.getPlayer(a[0]) != null && Bukkit.getOnlinePlayers().map { it.name.lowercase() }.contains(a[0].lowercase())) TpaManager.sendTpaRequest(p, Bukkit.getPlayer(a[0])!!)
-            else send(p, "playerOffline", a[0])
+            else messageU.send(p, "playerOffline", a[0])
 
-        } else send(p, "&cUse &f/&ctpa &f<&cPlayer&f>")
+        } else messageU.send(p, "&cUse &f/&ctpa &f<&cPlayer&f>")
 
         return true
     }
@@ -72,7 +71,7 @@ class TpaC : TabExecutor {
     }
 
     private fun help(p: Player) {
-        sendHeader(
+        messageU.sendHeader(
             p, """
             &f/&etpaccept &7- Accepts the requested TPA.
             &f/&etpaccept &f<&ePlayer&f> &7- Accepts the tpa of a specific player.
@@ -83,7 +82,7 @@ class TpaC : TabExecutor {
     }
 
     private fun helpTp(p: Player) {
-        sendHeader(
+        messageU.sendHeader(
             p, """
             &f/&etp &f<&ePlayer&f> &7- Teleport to a player.
             &f/&etp &f<&ePlayer&f> (&ePlayer&f) &7- Teleport one player to another.
