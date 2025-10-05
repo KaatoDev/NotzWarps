@@ -19,9 +19,10 @@ Intuitive TPA system with hover and clickable messages to accept or decline. Sev
 <br/>
 
 ## Permissions
+- `notzwarps.warp.{warp}` - Allows the player to teleport to the warp.
 - `notzwarps.admin` - Enables the player to use the /nw admin command.
-- `notzwarps.nodelay` - Enables the player to teleport instantly (for admins).
-- `notzwarps.vip` - VIP permission that allows the player to instantly teleport and always spawn in the VIP Warp (for VIP players).
+- `notzwarps.nodelay` - Enables the player to teleport instantly for warp or player (recommended for admin use only).
+- `notzwarps.vip` - VIP permission that allows the player to instantly teleport to warps only (not to other players) and always spawn in the VIP Warp (recommended for VIP players).
 
 <br/>
 
@@ -31,26 +32,36 @@ Intuitive TPA system with hover and clickable messages to accept or decline. Sev
 
 ### `/warps`
  - Access to the Warp GUI.
+- 
+### `/spawn`
+ - Teleport to the Spawn.
+
+### `/spawnvip`
+ - Teleport to the VIP Spawn.
+
+### `/tpaccept` | `/tpadeny`
+ - Accepts or denies a TPA request.
 
 ### `/nwarp`
  - `autoslot` \<on/off> - Enables/disables the auto-sort of warps in the Warp GUI;
  - `list` - List all enabled warps;
  - `resetmenu` - Reset the warp menu;
- - `set` \<warp> - Sets the current location in an new or existing warp, creating it;
+ - `set` \<warp> - Sets the current location in a new or existing warp, creating it;
  - `setlore` \<lore...> - Changes the default lore of warps (be careful as it rewrites existing ones);
  - `spawntowarp` \<warp/on/off> - Enables/disables or changes the default spawn warp;
  - `spawnvip` \<warp/on/off> - Enables, disables, or changes the default spawn warp for VIP players;
  - `<warp>`
-   - `get` - Get the warp's item icon;
+   - `get` - Get the warp's item;
    - `remove` - Deletes the warp;
    - `set` - Sets the current location in the warp;
    - `setdisplay` \<display...> - Change warp's item display;
+   - `setenchant` \<on/off> - Changes if the warp item is enchanted or not.
    - `setlore` \<lore...> - Change warp's item lore;
    - `setslot` \<slot> - Changes warp's slot;
-   - `setMaterial` \<material> - Changes the warp's item material;
+   - `setmaterial` \<material> - Changes the warp's item material;
    - `unsetslot` - Resets the warp's slot (useful to hide it if auto-sort is enabled).
 <br/>
 <sub> | <> required argument. | ( ) optional argument. | </sub>
 #
 
-<sub> Tested versions: 1.8 - 1.12.2 </sub>
+<sub> Tested versions: 1.8 - 1.13 </sub>
