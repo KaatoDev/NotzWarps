@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.managers
 
-import dev.kaato.notzapi.utils.MessageU.send
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.managers.WarpManager.alterLore
 import dev.kaato.notzwarps.managers.WarpManager.containsWarp
 import dev.kaato.notzwarps.managers.WarpManager.editWarp
@@ -18,12 +18,12 @@ import org.bukkit.entity.Player
 
 object CommandsManager {
     fun listWarpCMD(p: Player) {
-        send(p, warpList().joinToString(prefix = "&e", separator = "&f, &e", postfix = "&f."))
+        messageU.send(p, warpList().joinToString(prefix = "&e", separator = "&f, &e", postfix = "&f."))
     }
 
     fun removeWarpCMD(p: Player, w: String) {
         removeWarp(w)
-        send(p, "removeWarp", w)
+        messageU.send(p, "removeWarp", w)
     }
 
     fun getWarpIconCMD(p: Player, w: String) {
@@ -32,15 +32,15 @@ object CommandsManager {
 
         if (icon != null) {
             p.inventory.addItem(icon)
-            send(p, "&eYou have received the item of the warp &f$display&e.")
+            messageU.send(p, "&eYou have received the item of the warp &f$display&e.")
         } else warpNotFound(p)
     }
 
     fun setWarpLocCMD(p: Player, w: String) {
         if (containsWarp(w) || (!containsWarp(w) && warpList().size < 31)) {
             setWarp(w, p.location)
-            send(p, "&aThe &fwarp $w &ahas been successfully created.")
-        } else send(p, "&cYou have reached the maximum limit of 30 (${warpList().size}) warps.")
+            messageU.send(p, "&aThe &fwarp $w &ahas been successfully created.")
+        } else messageU.send(p, "&cYou have reached the maximum limit of 30 (${warpList().size}) warps.")
 
     }
 
@@ -50,7 +50,7 @@ object CommandsManager {
             editWarp(w, material)
         } else editWarp(w, p.itemInHand.type)
 
-        if (editWarp) send(p, "&eThe material of the item of &fwarp $w &ehas been successfully changed.")
+        if (editWarp) messageU.send(p, "&eThe material of the item of &fwarp $w &ehas been successfully changed.")
         else warpNotFound(p)
     }
 
@@ -61,42 +61,42 @@ object CommandsManager {
             "true", "on" -> editWarp(w, true)
             "false", "off" -> editWarp(w, false)
             else -> {
-                send(p, "&cUse only TRUE/ON or FALSE/OFF as argument.")
+                messageU.send(p, "&cUse only TRUE/ON or FALSE/OFF as argument.")
                 return
             }
         }
 
-        if (editWarp) send(p, "&eThe enchantment of the item of &fwarp $w &ehas been successfully changed.")
+        if (editWarp) messageU.send(p, "&eThe enchantment of the item of &fwarp $w &ehas been successfully changed.")
         else warpNotFound(p)
     }
 
     fun unsetWarpSlotCMD(p: Player, w: String) {
         editWarp(w, -1)
-        send(p, "&eThe &fwarp $w &ehas had its slot reset and will no longer appear in the menu&a.")
+        messageU.send(p, "&eThe &fwarp $w &ehas had its slot reset and will no longer appear in the menu&a.")
 
     }
 
     fun autoSlotCMD(p: Player, string: String) {
         when (string) {
             "true", "on" -> {
-                if (setAutoSlot(true)) send(p, "&eThe autoslot has been &aenabled&e.")
-                else send(p, "&cAuto-slot is already &aenabled&c.")
+                if (setAutoSlot(true)) messageU.send(p, "&eThe autoslot has been &aenabled&e.")
+                else messageU.send(p, "&cAuto-slot is already &aenabled&c.")
             }
 
             "false", "off" -> {
-                if (setAutoSlot(false)) send(p, "&eThe autoslot has been &adisabled&e.")
-                else send(p, "&cAuto-slot is already &adisabled&c.")
+                if (setAutoSlot(false)) messageU.send(p, "&eThe autoslot has been &adisabled&e.")
+                else messageU.send(p, "&cAuto-slot is already &adisabled&c.")
             }
 
-            else -> send(p, "&cUse only TRUE/ON or FALSE/OFF as argument.")
+            else -> messageU.send(p, "&cUse only TRUE/ON or FALSE/OFF as argument.")
         }
     }
 
     fun setWarpCMD(p: Player, warp: String) {
         when (setWarp(warp, p.location)) {
-            true -> send(p, "&aThe &fwarp $warp&a has been successfully created.")
-            false -> send(p, "&eThe new location of &f$warp&e has been successfully set.")
-            null -> send(p, "&cThis warp name is unavailable!")
+            true -> messageU.send(p, "&aThe &fwarp $warp&a has been successfully created.")
+            false -> messageU.send(p, "&eThe new location of &f$warp&e has been successfully set.")
+            null -> messageU.send(p, "&cThis warp name is unavailable!")
         }
     }
 
@@ -104,7 +104,7 @@ object CommandsManager {
         val lore = mutableListOf(lore1)
         if (!lore2.isNullOrEmpty()) lore.add(lore2)
         alterLore(lore)
-        send(p, "&eThe default lore has been changed to ${lore.joinToString(separator = " ")}&e. (Existing warps have had their lore replaced as well)")
+        messageU.send(p, "&eThe default lore has been changed to ${lore.joinToString(separator = " ")}&e. (Existing warps have had their lore replaced as well)")
     }
 
     fun spawnToWarpCMD(p: Player, value: String) {
@@ -114,9 +114,9 @@ object CommandsManager {
 
             else -> if (containsWarp(value)) {
                 setSpawnToWarp(value)
-                send(p, "&aThe warp &f${value}&a has been set as the default Spawn.")
+                messageU.send(p, "&aThe warp &f${value}&a has been set as the default Spawn.")
 
-            } else send(p, "&cThe warp &f${value}&c does not exist. (Or use ON/OFF)")
+            } else messageU.send(p, "&cThe warp &f${value}&c does not exist. (Or use ON/OFF)")
         }
 
     }
@@ -128,33 +128,33 @@ object CommandsManager {
 
             else -> if (containsWarp(value)) {
                 setSpawnVip(value)
-                send(p, "&aThe warp &f${value}&a has been set as the default VIP Spawn.")
+                messageU.send(p, "&aThe warp &f${value}&a has been set as the default VIP Spawn.")
 
-            } else send(p, "&cThe warp &f${value}&c does not exist. (Or use TRUE/ON or FALSE/OFF)")
+            } else messageU.send(p, "&cThe warp &f${value}&c does not exist. (Or use TRUE/ON or FALSE/OFF)")
         }
 
     }
 
     fun setDisplayCMD(p: Player, w: String, display: String) {
-        if (editWarp(w, display)) send(p, "&eThe &fwarp $w &ehad its display changed to &r$display&e.")
+        if (editWarp(w, display)) messageU.send(p, "&eThe &fwarp $w &ehad its display changed to &r$display&e.")
         else warpNotFound(p)
 
     }
 
     fun setDisplayCMD(p: Player, w: String, displayArr: List<String>) {
         val display = displayArr.joinToString(separator = " ")
-        if (editWarp(w, display)) send(p, "&eThe &fwarp $w &ehad its display changed to &r$display&e.")
+        if (editWarp(w, display)) messageU.send(p, "&eThe &fwarp $w &ehad its display changed to &r$display&e.")
         else warpNotFound(p)
 
     }
 
     fun setLoreCMD(p: Player, w: String, display: String) {
-        if (editWarp(w, display)) send(p, "&eThe &fwarp $w &ehad its lore changed.")
+        if (editWarp(w, display)) messageU.send(p, "&eThe &fwarp $w &ehad its lore changed.")
         else warpNotFound(p)
     }
 
     fun setLoreCMD(p: Player, w: String, lore: List<String>) {
-        if (setWarpLore(w, lore)) send(p, "&eThe &fwarp $w &ehad its lore changed.")
+        if (setWarpLore(w, lore)) messageU.send(p, "&eThe &fwarp $w &ehad its lore changed.")
         else warpNotFound(p)
     }
 
@@ -164,15 +164,15 @@ object CommandsManager {
         try {
             slot = slotStr.toInt()
         } catch (e: NumberFormatException) {
-            send(p, "&cYou should put a number in the slot.")
+            messageU.send(p, "&cYou should put a number in the slot.")
         }
 
-        if (editWarp(w, slot)) send(p, "&eThe &fwarp $w &ehad its slot changed to &f&l${slotStr}&e.")
+        if (editWarp(w, slot)) messageU.send(p, "&eThe &fwarp $w &ehad its slot changed to &f&l${slotStr}&e.")
         else warpNotFound(p)
     }
 
     private fun warpNotFound(p: Player) {
-        send(p, "warpNotFound2")
+        messageU.send(p, "warpNotFound2")
     }
 
 }

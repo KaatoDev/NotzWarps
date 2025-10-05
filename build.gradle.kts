@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "dev.kaato"
-version = "2.1"
+version = "2.1.1"
 
 repositories {
     mavenCentral()
@@ -20,7 +20,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("dev.kaato:NotzAPI:0.4.5")
+    implementation("dev.kaato:NotzAPI:0.4.7")
 }
 
 val targetJavaVersion = 8

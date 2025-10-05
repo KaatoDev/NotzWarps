@@ -2,6 +2,7 @@ package dev.kaato.notzwarps.gui
 
 import dev.kaato.notzapi.apis.NotzGUI
 import dev.kaato.notzwarps.Main.Companion.cf
+import dev.kaato.notzwarps.Main.Companion.napi
 import dev.kaato.notzwarps.Main.Companion.wf
 import dev.kaato.notzwarps.managers.WarpManager.getWarpsSlot
 
@@ -13,13 +14,13 @@ class WarpGUI {
             wf.config.getInt("rows").coerceAtMost(6)
         } else if (getWarpsSlot().size % 5 == 0) getWarpsSlot().size / 5 + 2 else getWarpsSlot().size / 5 + 3
 
-        menu = NotzGUI(null, rows, "warpmenu", cf.config.getString("titleGUI"))
+        menu = NotzGUI(null, rows, "warpmenu", cf.config.getString("titleGUI"), napi.pluginManager)
         menu()
     }
 
     private fun menu() {
         menu.setPanel(0, false)
-        menu.setPanel(cf.config.getInt("panelGlass")?:0, true)
+        menu.setPanel(cf.config.getInt("panelGlass") ?: 0, true)
 
         if (wf.config.getBoolean("autoSlot")) {
             val wps = getWarpsSlot()
@@ -29,8 +30,8 @@ class WarpGUI {
                 3 -> "11 13 15"
                 4 -> "10 12 14 16"
                 5 -> "11 12 13 15 16"
-                6 -> "10 12 14 19 21 23"
-                7 -> "10 12 14 16 19 21 23"
+                6 -> "11 13 15 20 22 24"
+                7 -> "11 13 15 19 21 23 25"
                 8 -> "10 12 14 16 19 21 23 25"
                 9 -> "10 11 13 15 16 19 21 23 25"
                 10 -> "10 11 13 15 16 19 21 22 24 25"

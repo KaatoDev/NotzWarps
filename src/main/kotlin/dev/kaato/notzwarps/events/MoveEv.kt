@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.events
 
-import dev.kaato.notzapi.utils.MessageU.send
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.managers.TpaManager
 import dev.kaato.notzwarps.managers.WarpManager
 import org.bukkit.Location
@@ -15,12 +15,12 @@ class MoveEv : Listener {
         if (walk(e.from, e.to!!)) {
             if (TpaManager.tpaTime.containsKey(e.player)) {
                 TpaManager.tpaTime.remove(e.player)
-                send(e.player, "cancelTpa")
+                messageU.send(e.player, "cancelTpa")
             }
 
             if (WarpManager.warpTime.containsKey(e.player)) {
                 WarpManager.warpTime.remove(e.player)
-                send(e.player, "cancelTp")
+                messageU.send(e.player, "cancelTp")
             }
         }
     }

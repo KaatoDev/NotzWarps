@@ -1,17 +1,14 @@
 package dev.kaato.notzwarps
 
-import dev.kaato.notzapi.NotzAPI
-import dev.kaato.notzapi.NotzAPI.Companion.itemManager
-import dev.kaato.notzapi.NotzAPI.Companion.messageManager
-import dev.kaato.notzapi.NotzAPI.Companion.placeholderManager
+import dev.kaato.notzapi.NotzAPI.addPlugin
+import dev.kaato.notzapi.NotzAPI.removePlugin
 import dev.kaato.notzapi.apis.NotzYAML
 import dev.kaato.notzapi.managers.ItemManager
 import dev.kaato.notzapi.managers.MessageManager
+import dev.kaato.notzapi.managers.NotzManager
 import dev.kaato.notzapi.managers.PlaceholderManager
-import dev.kaato.notzapi.utils.MessageU.send
-import dev.kaato.notzapi.utils.MessageU.sendHoverURL
-import dev.kaato.notzapi.utils.MessageU.set
-import dev.kaato.notzapi.utils.OthersU.isAdmin
+import dev.kaato.notzapi.utils.*
+import dev.kaato.notzapi.utils.MessageU.Companion.sendHoverURL
 import dev.kaato.notzwarps.commands.NWarpC
 import dev.kaato.notzwarps.commands.TpaC
 import dev.kaato.notzwarps.commands.WarpC
@@ -36,23 +33,35 @@ class Main : JavaPlugin() {
 
         lateinit var warpGUI: WarpGUI
 
-        lateinit var notzAPI: NotzAPI
+        lateinit var plugin: JavaPlugin
+        lateinit var napi: NotzManager
         lateinit var phM: PlaceholderManager
         lateinit var msgM: MessageManager
         lateinit var itemM: ItemManager
+        lateinit var eventU: EventU
+        lateinit var mainU: MainU
+        lateinit var menuU: MenuU
+        lateinit var messageU: MessageU
+        lateinit var othersU: OthersU
     }
 
     override fun onEnable() {
         pathRaw = dataFolder.absolutePath
-        notzAPI = NotzAPI(this)
+        plugin = this
+        napi = addPlugin(plugin)
 
-        cf = NotzYAML("config")
-        wf = NotzYAML("warps")
-        msgf = messageManager.messageFile
+        msgM = napi.messageManager
+        itemM = napi.itemManager
+        phM = napi.placeholderManager
+        eventU = napi.eventU
+        mainU = napi.mainU
+        menuU = napi.menuU
+        messageU = napi.messageU
+        othersU = napi.othersU
 
-        phM = placeholderManager
-        msgM = messageManager
-        itemM = itemManager
+        cf = NotzYAML(this, "config")
+        wf = NotzYAML(this, "warps")
+        msgf = msgM.messageFile
 
         object : BukkitRunnable() {
             override fun run() {
@@ -71,7 +80,7 @@ class Main : JavaPlugin() {
         regEvents()
         regTab()
         letters()
-        if (!Bukkit.getOnlinePlayers().isEmpty()) Bukkit.getOnlinePlayers().filter { it.hasPermission("notzwarps.admin") }.forEach { send(it, "&aWarps have been initialized.") }
+        if (!Bukkit.getOnlinePlayers().isEmpty()) Bukkit.getOnlinePlayers().filter { it.hasPermission("notzwarps.admin") }.forEach { messageU.send(it, "&aWarps have been initialized.") }
     }
 
 
@@ -95,7 +104,7 @@ class Main : JavaPlugin() {
 
 
     private fun letters() {
-        send(
+        messageU.send(
             Bukkit.getConsoleSender(), """
                 &2Inicializado com sucesso.
                 &2Initialized successfully.
@@ -103,16 +112,20 @@ class Main : JavaPlugin() {
                 &f┃┃┏┓╋┓&6┃┃┃┏┓┏┓┏┓┏
                 &f┛┗┗┛┗┗&6┗┻┛┗┻┛ ┣┛┛
                 
-                ${set("{prefix}")} &6Para mais plugins como este, acesse &bhttps://kaato.dev/plugins&6!!
-                ${set("{prefix}")} &6For more plugins like this, visit &bhttps://kaato.dev/plugins&6!!
+                ${messageU.set("{prefix}")} &6Para mais plugins como este, acesse &bhttps://kaato.dev/plugins&6!!
+                ${messageU.set("{prefix}")} &6For more plugins like this, visit &bhttps://kaato.dev/plugins&6!!
                 
             """.trimIndent()
         )
         Bukkit.getOnlinePlayers().forEach {
-            if (isAdmin(it)) {
-                sendHoverURL(it, set("{prefix}") + " &6For more plugins like this, visit &e&oour website&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
-                sendHoverURL(it, set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
+            if (othersU.isAdmin(it)) {
+                sendHoverURL(it, messageU.set("{prefix}") + " &6For more plugins like this, visit &e&oour website&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
+                sendHoverURL(it, messageU.set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
             }
         }
+    }
+
+    override fun onDisable() {
+        removePlugin(plugin)
     }
 }

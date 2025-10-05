@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.commands
 
-import dev.kaato.notzapi.utils.MessageU.sendHeader
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.managers.CommandsManager.autoSlotCMD
 import dev.kaato.notzwarps.managers.CommandsManager.getWarpIconCMD
 import dev.kaato.notzwarps.managers.CommandsManager.listWarpCMD
@@ -106,15 +106,14 @@ class NWarpC : TabExecutor {
             &7+ &elist &7- List all enabled warps.
             &7+ &eresetmenu &7- Reset the warp menu.
             &7+ &eset &f<&ewarp&f> &7- Sets the current location in a new or existing warp, creating it.
-            &7+ &esetenchant &f<&eon&f/&eoff&f> &7- Changes if the warp item is enchanted or not.
             &7+ &esetlore &f<&elore...&f> &7- Changes the default lore of warps (be careful as it rewrites existing ones).
             &7+ &espawntowarp &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables/disables or changes the default spawn warp.
             &7+ &espawnvip &f<&ewarp&f/&eon&f/&eoff&f> &7- Enables, disables, or changes the default spawn warp for VIP players.
         """.trimIndent()
 
-        if (a.isNullOrEmpty()) sendHeader(p, "$utilize &7+\n$help")
+        if (a.isNullOrEmpty()) messageU.sendHeader(p, "$utilize &7+\n$help")
         else if (!warp.isNullOrEmpty()) helpWarps(p, a, warp)
-        else sendHeader(
+        else messageU.sendHeader(
             p, utilize + when (a[0]) {
                 "autoslot" -> "autoslot &f<&eon&f/&eoff&f> &7- Enables/disables the auto-sort of warps in the Warp GUI"
                 "list" -> "list &7- List all enabled warps"
@@ -130,7 +129,7 @@ class NWarpC : TabExecutor {
     }
 
     private fun helpWarps(p: Player, a: List<String>, warp: String) {
-        val utilize = "&eUtilize &f/&enw &a$warp &e"
+        val utilize = "&eUse &f/&enw &a$warp &e"
         val help = """
             &7+ &eget &7- Get the warp's item.
             &7+ &eremove &7- Deletes the warp.
@@ -143,16 +142,17 @@ class NWarpC : TabExecutor {
             &7+ &eunsetslot &7- Resets the warp's slot (useful to hide it if auto-sort is enabled).
         """.trimIndent()
 
-        if (a.size == 1) sendHeader(p, "$utilize &7+\n$help")
-        else sendHeader(
+        if (a.size == 1) messageU.sendHeader(p, "$utilize &7+\n$help")
+        else messageU.sendHeader(
             p, utilize + when (a[1]) {
                 "get" -> "get &7- Get the warp's item."
                 "remove" -> "remove &7- Deletes the warp."
                 "set" -> "set &7- Sets the current location in the warp."
                 "setdisplay" -> "setdisplay &f<&edisplay...&f> &7- Change warp's item display."
+                "setenchant" -> "setenchant &f<&eon&f/&eoff&f> &7- Changes if the warp item is enchanted or not."
                 "setlore" -> "setlore &f<&elore...&f> &7- Change warp's item lore."
                 "setslot" -> "setslot &f<&eslot&f> &7- Changes warp's slot."
-                "setMaterial" -> "setMaterial &f<&ematerial&f> &7- Changes the warp's item material."
+                "setmaterial" -> "setmaterial &f<&ematerial&f> &7- Changes the warp's item material."
                 "unsetslot" -> "unsetslot &7- Resets the warp's slot (useful to hide it if auto-sort is enabled)."
 
                 else -> "&7+\n$help"

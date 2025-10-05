@@ -1,13 +1,12 @@
 package dev.kaato.notzwarps.managers
 
-import dev.kaato.notzapi.NotzAPI.Companion.plugin
 import dev.kaato.notzapi.apis.NotzItems.buildItem
-import dev.kaato.notzapi.utils.MessageU.c
-import dev.kaato.notzapi.utils.MessageU.send
-import dev.kaato.notzapi.utils.MessageU.set
+import dev.kaato.notzapi.utils.MessageU.Companion.c
 import dev.kaato.notzwarps.Main.Companion.cf
 import dev.kaato.notzwarps.Main.Companion.itemM
+import dev.kaato.notzwarps.Main.Companion.messageU
 import dev.kaato.notzwarps.Main.Companion.phM
+import dev.kaato.notzwarps.Main.Companion.plugin
 import dev.kaato.notzwarps.Main.Companion.warpGUI
 import dev.kaato.notzwarps.Main.Companion.wf
 import dev.kaato.notzwarps.gui.WarpGUI
@@ -67,34 +66,34 @@ object WarpManager {
      */
     fun teleport(player: Player, warpName: String) {
         if (warpName != "spawn" && !player.hasPermission("notzwarps.warp.$warpName")) {
-            send(player, "permWarp")
+            messageU.send(player, "permWarp")
             return
         }
 
         val warp = warps[warpName]!!
 
         if (warpTime.containsKey(player)) {
-            send(player, "onHold")
+            messageU.send(player, "onHold")
             return
         }
 
         if (!player.hasPermission("notzwarps.nodelay") || player.hasPermission("notzwarps.vip")) {
 
             warpTime[player] = delayPlayer + 1
-            send(player, "teleporting")
+            messageU.send(player, "teleporting")
 
             object : BukkitRunnable() {
                 override fun run() {
                     if (warpTime.containsKey(player)) {
                         player.teleport(warp.location)
-                        send(player, "warpTp", set(warp.display))
+                        messageU.send(player, "warpTp", messageU.set(warp.display))
                     }
                 }
             }.runTaskLater(plugin, delay)
 
         } else {
             player.teleport(warp.location)
-            send(player, "warpTp", set(warp.display))
+            messageU.send(player, "warpTp", messageU.set(warp.display))
         }
     }
 
@@ -133,14 +132,14 @@ object WarpManager {
             val list = warpList().toMutableList()
             list.add(warp)
             wf.config.set("warpList", list)
-            wf.config.set("warps.$warp.slot", -1)
+            wf.config.set("warps.$warp.slot", 0)
             wf.config.set("warps.$warp.display", warps[warp]!!.display)
 
             if (warps[warp]!!.slot >= 0) resetMenu()
 
         } else if (!warps.containsKey(warp)) {
             warps[warp] = Warp(warp, c("&e&l$warp"), loc, 13, buildItemWarp(warp, true))
-            wf.config.set("warps.$warp.slot", -1)
+            wf.config.set("warps.$warp.slot", 0)
             wf.config.set("warps.$warp.display", warps[warp]!!.display)
             wf.saveConfig()
 
