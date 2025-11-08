@@ -1,5 +1,16 @@
 <div align="center">
-<img src="https://github.com/user-attachments/assets/cee005d7-6240-46ec-b167-ca4df76172eb" alt="NotzWarps" height="300" >
+  
+##### **NotzPlugins**
+<a href="https://modrinth.com/plugin/notzexcavate">
+<img src="https://repo.kaato.dev/images/plugins/NotzExcavate2.png" alt="Notz Excavate" width="150"/>
+</a>
+<a href="https://modrinth.com/plugin/notzscoreboard">
+<img src="https://repo.kaato.dev/images/plugins/NotzScoreboard2.png" alt="Notz Scoreboard" width="150"/>
+</a>
+<img src="https://repo.kaato.dev/images/plugins/NotzWarps2.png" alt="Notz Warps" width="150"/>
+  
+#
+<img src="https://repo.kaato.dev/images/plugins/NotzWarps2.png" alt="Notz Warps"/>
 
 #
 NotzWarps is a complete and fully customizable Warp and TPA plugin that features: TPA with clickable messages, integrated GUI with customizable item icons and names, enabled auto-sort for warps, etc.
@@ -52,7 +63,7 @@ Intuitive TPA system with hover and clickable messages to accept or decline. Sev
 ### `/spawnvip`
  - Teleport to the VIP Spawn.
 
-### `/tpaccept` | `/tpadeny`
+### `/tpaccept` - `/tpadeny`
  - Accepts or denies a TPA request.
 
 ### `/nwarp`
@@ -73,8 +84,10 @@ Intuitive TPA system with hover and clickable messages to accept or decline. Sev
    - `setslot` \<slot> - Changes warp's slot;
    - `setmaterial` \<material> - Changes the warp's item material;
    - `unsetslot` - Resets the warp's slot (useful to hide it if auto-sort is enabled).
+
 <br/>
 <sub> | <> required argument. | ( ) optional argument. | </sub>
+
 #
 
-<sub> Tested versions: 1.8 - 1.13 </sub>
+<sub> Tested versions: 1.8 - 1.14.4 </sub>
