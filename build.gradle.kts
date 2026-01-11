@@ -1,26 +1,31 @@
 plugins {
-    kotlin("jvm") version "2.1.10"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "2.3.0"
+    id("com.gradleup.shadow") version "8.3.0"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = "dev.kaato"
-version = "2.1.1"
+version = "2.1.2"
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
         name = "spigotmc-repo"
     }
     maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
     }
+    maven("https://maven.elmakers.com/repository/") {
+        name = "elmakers-repo"
+    }
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("dev.kaato:NotzAPI:0.4.7")
+    implementation("dev.kaato:NotzAPI:0.4.8")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 }
 
 val targetJavaVersion = 8

@@ -2,8 +2,8 @@ package dev.kaato.notzwarps.managers
 
 import dev.kaato.notzapi.utils.MessageU.Companion.c
 import dev.kaato.notzapi.utils.MessageU.Companion.createHoverCMD
-import dev.kaato.notzwarps.Main.Companion.messageU
-import dev.kaato.notzwarps.Main.Companion.plugin
+import dev.kaato.notzwarps.NotzWarp.Companion.messageU
+import dev.kaato.notzwarps.NotzWarp.Companion.plugin
 import dev.kaato.notzwarps.managers.WarpManager.delay
 import dev.kaato.notzwarps.managers.WarpManager.delayPlayer
 import dev.kaato.notzwarps.managers.WarpManager.runWarp

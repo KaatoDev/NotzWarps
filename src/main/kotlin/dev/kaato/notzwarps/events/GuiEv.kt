@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.events
 
-import dev.kaato.notzwarps.Main.Companion.menuU
+import dev.kaato.notzwarps.NotzWarp.Companion.menuU
 import dev.kaato.notzwarps.managers.WarpManager.teleport
 import dev.kaato.notzwarps.managers.WarpManager.warpListItems
 import org.bukkit.entity.Player

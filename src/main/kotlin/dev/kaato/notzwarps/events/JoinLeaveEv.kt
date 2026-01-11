@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.events
 
-import dev.kaato.notzwarps.Main.Companion.wf
+import dev.kaato.notzwarps.NotzWarp.Companion.wf
 import dev.kaato.notzwarps.managers.TpaManager
 import dev.kaato.notzwarps.managers.WarpManager.containsWarp
 import dev.kaato.notzwarps.managers.WarpManager.getWarpLoc

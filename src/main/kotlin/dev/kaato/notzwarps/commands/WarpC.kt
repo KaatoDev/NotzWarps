@@ -1,7 +1,7 @@
 package dev.kaato.notzwarps.commands
 
-import dev.kaato.notzwarps.Main.Companion.messageU
-import dev.kaato.notzwarps.Main.Companion.warpGUI
+import dev.kaato.notzwarps.NotzWarp.Companion.messageU
+import dev.kaato.notzwarps.NotzWarp.Companion.warpGUI
 import dev.kaato.notzwarps.managers.WarpManager.containsWarp
 import dev.kaato.notzwarps.managers.WarpManager.teleport
 import dev.kaato.notzwarps.managers.WarpManager.warpList

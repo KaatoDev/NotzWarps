@@ -1,9 +1,9 @@
 package dev.kaato.notzwarps.gui
 
 import dev.kaato.notzapi.apis.NotzGUI
-import dev.kaato.notzwarps.Main.Companion.cf
-import dev.kaato.notzwarps.Main.Companion.napi
-import dev.kaato.notzwarps.Main.Companion.wf
+import dev.kaato.notzwarps.NotzWarp.Companion.cf
+import dev.kaato.notzwarps.NotzWarp.Companion.napi
+import dev.kaato.notzwarps.NotzWarp.Companion.wf
 import dev.kaato.notzwarps.managers.WarpManager.getWarpsSlot
 
 class WarpGUI {

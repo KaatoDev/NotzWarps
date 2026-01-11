@@ -2,13 +2,13 @@ package dev.kaato.notzwarps.managers
 
 import dev.kaato.notzapi.apis.NotzItems.buildItem
 import dev.kaato.notzapi.utils.MessageU.Companion.c
-import dev.kaato.notzwarps.Main.Companion.cf
-import dev.kaato.notzwarps.Main.Companion.itemM
-import dev.kaato.notzwarps.Main.Companion.messageU
-import dev.kaato.notzwarps.Main.Companion.phM
-import dev.kaato.notzwarps.Main.Companion.plugin
-import dev.kaato.notzwarps.Main.Companion.warpGUI
-import dev.kaato.notzwarps.Main.Companion.wf
+import dev.kaato.notzwarps.NotzWarp.Companion.cf
+import dev.kaato.notzwarps.NotzWarp.Companion.itemM
+import dev.kaato.notzwarps.NotzWarp.Companion.messageU
+import dev.kaato.notzwarps.NotzWarp.Companion.phM
+import dev.kaato.notzwarps.NotzWarp.Companion.plugin
+import dev.kaato.notzwarps.NotzWarp.Companion.warpGUI
+import dev.kaato.notzwarps.NotzWarp.Companion.wf
 import dev.kaato.notzwarps.gui.WarpGUI
 import org.bukkit.Bukkit
 import org.bukkit.Location

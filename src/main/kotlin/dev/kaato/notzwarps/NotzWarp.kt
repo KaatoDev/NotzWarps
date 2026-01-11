@@ -1,7 +1,8 @@
 package dev.kaato.notzwarps
 
-import dev.kaato.notzapi.NotzAPI.addPlugin
-import dev.kaato.notzapi.NotzAPI.removePlugin
+import dev.kaato.notzapi.NotzAPI
+import dev.kaato.notzapi.NotzAPI.Companion.addPlugin
+import dev.kaato.notzapi.NotzAPI.Companion.removePlugin
 import dev.kaato.notzapi.apis.NotzYAML
 import dev.kaato.notzapi.managers.ItemManager
 import dev.kaato.notzapi.managers.MessageManager
@@ -18,11 +19,13 @@ import dev.kaato.notzwarps.events.MoveEv
 import dev.kaato.notzwarps.gui.WarpGUI
 import dev.kaato.notzwarps.managers.TpaManager
 import dev.kaato.notzwarps.managers.WarpManager.load
+import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
+import kotlin.system.measureTimeMillis
 
-class Main : JavaPlugin() {
+class NotzWarp : JavaPlugin() {
     companion object {
         lateinit var pathRaw: String
 
@@ -34,6 +37,7 @@ class Main : JavaPlugin() {
         lateinit var warpGUI: WarpGUI
 
         lateinit var plugin: JavaPlugin
+        var notzAPI: NotzAPI? = null
         lateinit var napi: NotzManager
         lateinit var phM: PlaceholderManager
         lateinit var msgM: MessageManager
@@ -46,27 +50,33 @@ class Main : JavaPlugin() {
     }
 
     override fun onEnable() {
-        pathRaw = dataFolder.absolutePath
-        plugin = this
-        napi = addPlugin(plugin)
+        val load = measureTimeMillis {
+            pathRaw = dataFolder.absolutePath
+            plugin = this
 
-        msgM = napi.messageManager
-        itemM = napi.itemManager
-        phM = napi.placeholderManager
-        eventU = napi.eventU
-        mainU = napi.mainU
-        menuU = napi.menuU
-        messageU = napi.messageU
-        othersU = napi.othersU
+            notzAPI = Bukkit.getServicesManager().load(NotzAPI::class.java)
+            napi = addPlugin(plugin)
+            napi.version = "2.1.2"
 
-        cf = NotzYAML(this, "config")
-        wf = NotzYAML(this, "warps")
-        msgf = msgM.messageFile
+            msgM = napi.messageManager
+            itemM = napi.itemManager
+            phM = napi.placeholderManager
+            eventU = napi.eventU
+            mainU = napi.mainU
+            menuU = napi.menuU
+            messageU = napi.messageU
+            othersU = napi.othersU
+
+            cf = NotzYAML(this, "config")
+            wf = NotzYAML(this, "warps")
+            msgf = msgM.messageFile
+        }
 
         object : BukkitRunnable() {
             override fun run() {
                 load()
                 warpGUI = WarpGUI()
+                othersU.sendAdmin("&2NotzWarps &ainitialized! (${load / 1000.0}s)")
 
                 setupMain()
             }
@@ -80,6 +90,7 @@ class Main : JavaPlugin() {
         regEvents()
         regTab()
         letters()
+        bStats()
         if (!Bukkit.getOnlinePlayers().isEmpty()) Bukkit.getOnlinePlayers().filter { it.hasPermission("notzwarps.admin") }.forEach { messageU.send(it, "&aWarps have been initialized.") }
     }
 
@@ -96,7 +107,7 @@ class Main : JavaPlugin() {
         getCommand("tpa").executor = TpaC()
     }
 
-    private fun regTab() {
+    private fun regTab() {  
         getCommand("warp")?.tabCompleter = WarpC()
         getCommand("nwarp")?.tabCompleter = NWarpC()
         getCommand("tpa").tabCompleter = TpaC()
@@ -123,6 +134,11 @@ class Main : JavaPlugin() {
                 sendHoverURL(it, messageU.set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
             }
         }
+    }
+
+    fun bStats() {
+        val pluginId = 28540
+        Metrics(this, pluginId)
     }
 
     override fun onDisable() {

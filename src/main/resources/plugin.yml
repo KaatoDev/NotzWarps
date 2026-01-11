@@ -1,8 +1,9 @@
 name: NotzWarps
-version: '2.1.1'
+version: '2.1.2'
 author: https://kaato.dev
-main: dev.kaato.notzwarps.Main
-#api-version: '1.18'
+main: dev.kaato.notzwarps.NotzWarp
+softdepend: [ NotzAPI ]
+#api-version: '1.12'
 
 commands:
   warp:

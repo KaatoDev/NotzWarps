@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.events
 
-import dev.kaato.notzwarps.Main.Companion.messageU
+import dev.kaato.notzwarps.NotzWarp.Companion.messageU
 import dev.kaato.notzwarps.managers.TpaManager
 import dev.kaato.notzwarps.managers.WarpManager
 import org.bukkit.Location

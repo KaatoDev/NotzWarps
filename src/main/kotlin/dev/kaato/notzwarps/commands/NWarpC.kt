@@ -1,6 +1,6 @@
 package dev.kaato.notzwarps.commands
 
-import dev.kaato.notzwarps.Main.Companion.messageU
+import dev.kaato.notzwarps.NotzWarp.Companion.messageU
 import dev.kaato.notzwarps.managers.CommandsManager.autoSlotCMD
 import dev.kaato.notzwarps.managers.CommandsManager.getWarpIconCMD
 import dev.kaato.notzwarps.managers.CommandsManager.listWarpCMD
