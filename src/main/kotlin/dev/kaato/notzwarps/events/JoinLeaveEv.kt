@@ -38,7 +38,7 @@ class JoinLeaveEv : Listener {
                 }
 
                 else -> {
-                    if (containsWarp(wf.config.getString("spawnVip"))) p.teleport(getWarpLoc(wf.config.getString("spawnVip"))!!)
+                    if (containsWarp(wf.config.getString("spawnVip") ?: "")) p.teleport(getWarpLoc(wf.config.getString("spawnVip") ?: "")!!)
                 }
             }
         }
@@ -46,11 +46,11 @@ class JoinLeaveEv : Listener {
         when (wf.config.getString("spawnToWarp")?.lowercase()) {
             "false" -> return
             "true" -> {
-                if (containsWarp("spawn")) p.teleport(getWarpLoc("spawn"))
+                if (containsWarp("spawn") && getWarpLoc("spawn") != null) p.teleport(getWarpLoc("spawn")!!)
             }
 
             else -> {
-                if (containsWarp(wf.config.getString("spawnToWarp"))) p.teleport(getWarpLoc(wf.config.getString("spawnToWarp")))
+                if (containsWarp(wf.config.getString("spawnToWarp") ?: "") && getWarpLoc("spawnToWarp") != null) p.teleport(getWarpLoc(wf.config.getString("spawnToWarp") ?: "")!!)
             }
         }
     }

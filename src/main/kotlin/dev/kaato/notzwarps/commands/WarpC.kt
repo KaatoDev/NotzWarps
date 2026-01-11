@@ -14,10 +14,10 @@ import java.util.*
 
 class WarpC : TabExecutor {
 
-    override fun onCommand(p: CommandSender?, cmd: Command?, label: String?, args: Array<out String?>?): Boolean {
+    override fun onCommand(p: CommandSender, cmd: Command, label: String, args: Array<out String?>): Boolean {
         if (p !is Player) return false
 
-        val a = args?.map { it?.lowercase()?:"" }
+        val a = args.map { it?.lowercase()?:"" }
 
         val help = {help(p)}
 
@@ -35,7 +35,7 @@ class WarpC : TabExecutor {
             return true
         }
 
-        if (a.isNullOrEmpty()) {
+        if (a.isEmpty()) {
             p.openInventory(warpGUI.menu.get())
             return true
         }

@@ -10,17 +10,17 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class TpaC : TabExecutor {
-    override fun onCommand(p: CommandSender?, cmd: Command?, label: String?, args: Array<out String?>?): Boolean {
+    override fun onCommand(p: CommandSender, cmd: Command, label: String, args: Array<out String?>): Boolean {
         if (p !is Player) return false
 
-        val a = args?.mapNotNull { it?.lowercase() }
+        val a = args.mapNotNull { it?.lowercase() }
 
         if (a == null) {
             help(p)
             return true
         }
 
-        if (cmd?.name != label) when (label) {
+        if (cmd.name != label) when (label) {
             "tpaccept", "tpaceitar" -> {
                 when (a.size) {
                     0 -> {
@@ -56,7 +56,7 @@ class TpaC : TabExecutor {
             else -> help(p)
         }
         else if (a.size == 1) {
-            if (a[0].lowercase() == p.name.lowercase()) messageU.send(p, "selfTpa")
+            if (a[0].equals(p.name, true)) messageU.send(p, "selfTpa")
             else if (Bukkit.getPlayer(a[0]) != null && Bukkit.getOnlinePlayers().map { it.name.lowercase() }.contains(a[0].lowercase())) TpaManager.sendTpaRequest(p, Bukkit.getPlayer(a[0])!!)
             else messageU.send(p, "playerOffline", a[0])
 

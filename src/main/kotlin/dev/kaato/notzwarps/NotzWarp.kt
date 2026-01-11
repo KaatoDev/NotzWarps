@@ -56,7 +56,7 @@ class NotzWarp : JavaPlugin() {
 
             notzAPI = Bukkit.getServicesManager().load(NotzAPI::class.java)
             napi = addPlugin(plugin)
-            napi.version = "2.1.2"
+            napi.version = "2.1.3"
 
             msgM = napi.messageManager
             itemM = napi.itemManager
@@ -102,15 +102,15 @@ class NotzWarp : JavaPlugin() {
     }
 
     private fun regCommands() {
-        getCommand("warp")?.executor = WarpC()
-        getCommand("nwarp")?.executor = NWarpC()
-        getCommand("tpa").executor = TpaC()
+        getCommand("warp")?.setExecutor( WarpC())
+        getCommand("nwarp")?.setExecutor( NWarpC())
+        getCommand("tpa")?.setExecutor(TpaC())
     }
 
     private fun regTab() {  
         getCommand("warp")?.tabCompleter = WarpC()
         getCommand("nwarp")?.tabCompleter = NWarpC()
-        getCommand("tpa").tabCompleter = TpaC()
+        getCommand("tpa")?.tabCompleter = TpaC()
     }
 
 
@@ -123,7 +123,6 @@ class NotzWarp : JavaPlugin() {
                 &f┃┃┏┓╋┓&6┃┃┃┏┓┏┓┏┓┏
                 &f┛┗┗┛┗┗&6┗┻┛┗┻┛ ┣┛┛
                 
-                ${messageU.set("{prefix}")} &6Para mais plugins como este, acesse &bhttps://kaato.dev/plugins&6!!
                 ${messageU.set("{prefix}")} &6For more plugins like this, visit &bhttps://kaato.dev/plugins&6!!
                 
             """.trimIndent()
@@ -131,7 +130,6 @@ class NotzWarp : JavaPlugin() {
         Bukkit.getOnlinePlayers().forEach {
             if (othersU.isAdmin(it)) {
                 sendHoverURL(it, messageU.set("{prefix}") + " &6For more plugins like this, visit &e&oour website&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
-                sendHoverURL(it, messageU.set("{prefix}") + " &6Para mais plugins como este, acesse o &e&onosso site&6!", arrayOf("&b&okaato.dev/plugins"), "https://kaato.dev/plugins"); it.sendMessage(" ")
             }
         }
     }

@@ -14,7 +14,7 @@ class WarpGUI {
             wf.config.getInt("rows").coerceAtMost(6)
         } else if (getWarpsSlot().size % 5 == 0) getWarpsSlot().size / 5 + 2 else getWarpsSlot().size / 5 + 3
 
-        menu = NotzGUI(null, rows, "warpmenu", cf.config.getString("titleGUI"), napi.pluginManager)
+        menu = NotzGUI(null, rows, "warpmenu", cf.config.getString("titleGUI")?:"noTitle", napi.pluginManager)
         menu()
     }
 

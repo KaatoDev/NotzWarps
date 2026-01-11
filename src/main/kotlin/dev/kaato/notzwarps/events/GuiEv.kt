@@ -19,8 +19,10 @@ class GuiEv : Listener {
             val item = e.currentItem
 
             if (warpListItems().contains(item)) {
-                teleport(p, item)
-                p.closeInventory()
+                if (item != null) {
+                    teleport(p, item)
+                    p.closeInventory()
+                }
             }
         }
     }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.kaato"
-version = "2.1.2"
+version = "2.1.3"
 
 repositories {
     mavenLocal()
@@ -22,9 +22,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("dev.kaato:NotzAPI:0.4.8")
+    implementation("dev.kaato:NotzAPI:0.4.8.1")
     implementation("org.bstats:bstats-bukkit:3.1.0")
 }
 
@@ -46,4 +46,12 @@ tasks.processResources {
     }
 }
 
+//tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+//    configurations = listOf(project.configurations.runtimeClasspath.get())
+//    relocate("org.bstats", project.group.toString())
+//}
 
+tasks.jar {
+    archiveFileName.set("NotzWarps-${project.version}.jar")
+//    destinationDirectory.set(file("G:/Gago32/Minecraft/Servidor/Rede Notz/1.18-1.21/plugins"))
+}

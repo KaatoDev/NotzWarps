@@ -1,9 +1,11 @@
 name: NotzWarps
-version: '2.1.2'
-author: https://kaato.dev
+version: '2.1.3'
 main: dev.kaato.notzwarps.NotzWarp
 softdepend: [ NotzAPI ]
-#api-version: '1.12'
+api-version: '1.13'
+authors: [ KaaDev ]
+description: Warp and TPA plugin with a fully customizable integrated GUI for warps with auto-sort.
+website: https://kaato.dev
 
 commands:
   warp:

@@ -26,23 +26,23 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class NWarpC : TabExecutor {
-    override fun onCommand(p: CommandSender?, cmd: Command?, label: String?, args: Array<out String?>?): Boolean {
+    override fun onCommand(p: CommandSender, cmd: Command, label: String, args: Array<out String?>): Boolean {
         if (p !is Player) return false
 
-        val a = args?.map { it?.lowercase() ?: "" }
+        val a = args.map { it?.lowercase() ?: "" }
 
         if (!p.hasPermission("notzwarps.admin")) {
             p.sendMessage("&cNo permission.")
             return false
         }
 
-        if (a.isNullOrEmpty()) {
+        if (a.isEmpty()) {
             help(p, a)
             return true
         }
 
-        var warp = containsWarp(a[0])
-        var w = if (warp) a[0] else ""
+        val warp = containsWarp(a[0])
+        val w = if (warp) a[0] else ""
         val help = { help(p, a, w) }
 
         when (a.size) {
@@ -93,8 +93,8 @@ class NWarpC : TabExecutor {
         return true
     }
 
-    override fun onTabComplete(p: CommandSender?, cmd: Command?, label: String?, args: Array<out String?>?): List<String?>? {
-        return if (args?.size == 1 && args[0] == "remove") warpList().toList()
+    override fun onTabComplete(p: CommandSender, cmd: Command, label: String, args: Array<out String?>): List<String?>? {
+        return if (args.size == 1 && args[0] == "remove") warpList().toList()
         else Collections.emptyList()
     }
 

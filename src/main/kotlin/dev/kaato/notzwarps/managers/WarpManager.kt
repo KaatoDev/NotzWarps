@@ -409,17 +409,23 @@ object WarpManager {
     private fun buildItemWarp(warp: String, create: Boolean): ItemStack {
         var item: ItemStack
 
-        val ender_eye = Material.entries.find { it.name.contains("ENDER") && it.name.contains("EYE") } ?: Material.STONE
+        val enderEye = Material.ENDER_EYE
 
         if (!wf.config.contains("warps.$warp.item.material") || create) {
-            item = buildItem(ender_eye, "&e&l$warp", listOf("&7&oClick to go", "&7&oto the warp."), false)
-            wf.config.set("warps.$warp.item.material", ender_eye.name)
+            item = buildItem(enderEye, "&e&l$warp", listOf("&7&oClick to go", "&7&oto the warp."), false)
+            wf.config.set("warps.$warp.item.material", enderEye.name)
             wf.config.set("warps.$warp.item.enchanted", false)
             wf.config.set("warps.$warp.item.lore", listOf("&7&oClick to go", "&7&oto the warp."))
             wf.saveConfig()
 
         } else item = buildItem(
-            Material.valueOf(wf.config.getString("warps.$warp.item.material")?.uppercase() ?: ""), wf.config.getString("warps.$warp.display") ?: "", wf.config.getStringList("warps.$warp.item.lore"), wf.config.getBoolean("warps.$warp.item.enchanted")
+            Material.valueOf(wf.config.getString("warps.$warp.item.material")?.uppercase().let {
+                if (it.equals("EYE_OF_ENDER"))
+                    "ENDER_EYE"
+                else if (it.equals("ENCHANTMENT_TABLE"))
+                    "ENCHANTING_TABLE"
+                else it ?: ""
+            }), wf.config.getString("warps.$warp.display") ?: "", wf.config.getStringList("warps.$warp.item.lore"), wf.config.getBoolean("warps.$warp.item.enchanted")
         )
 
 
